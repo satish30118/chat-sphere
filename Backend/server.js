@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const userRoutes = require("./router/userRoutes");
 const chatRoutes = require("./router/chatRoutes");
+const messageRoutes = require("./router/messageRoutes");
 
 const app = express();
 const dotenv = require("dotenv").config();
@@ -25,7 +26,7 @@ app.get("/", (req, res) => {
 // Routes //
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/chat", chatRoutes);
-
+app.use("/api/v1/message", messageRoutes);
 
 // Error Handling middlewares
 app.use(notFound);

@@ -8,8 +8,8 @@ const { authenication } = require("../middleware/Authentication");
 
 const router = express.Router();
 
-router.post("/register", registerUser);
-router.post("/login", userLogin);
-router.get("/find", authenication, FindUsers);
+router.route("/register").post(registerUser);
+router.route("/login").post(userLogin);
+router.route("/find").get(authenication, FindUsers);
 
 module.exports = router;

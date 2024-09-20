@@ -2,6 +2,8 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const userRoutes = require("./router/userRoutes");
+const chatRoutes = require("./router/chatRoutes");
+
 const app = express();
 const dotenv = require("dotenv").config();
 const connectDB = require("./database/dbConnect");
@@ -22,6 +24,8 @@ app.get("/", (req, res) => {
 
 // Routes //
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/chat", chatRoutes);
+
 
 // Error Handling middlewares
 app.use(notFound);

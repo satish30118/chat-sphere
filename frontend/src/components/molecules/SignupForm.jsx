@@ -8,9 +8,10 @@ import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useState } from "react";
 import Icon from "../atoms/Icon";
-import { PhoneIcon, AddIcon, WarningIcon } from "@chakra-ui/icons";
+import { useAuth } from "@/app/context/authContext";
 
 const SignupForm = () => {
+  const [auth, setAuth] = useAuth();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
@@ -61,7 +62,7 @@ const SignupForm = () => {
         },
         config
       );
-      console.log(data);
+      // console.log(data);
       toast({
         title: "Registration Successful",
         status: "success",
@@ -70,6 +71,7 @@ const SignupForm = () => {
         position: "bottom",
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
+      setAuth(...auth, data)
       setLoading(false);
     } catch (error) {
       setLoading(false);

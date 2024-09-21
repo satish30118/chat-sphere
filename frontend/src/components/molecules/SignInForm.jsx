@@ -7,8 +7,10 @@ import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import Icon from "../atoms/Icon";
+import { useAuth } from "@/app/context/authContext";
 
 const SignInForm = () => {
+  const [auth, setAuth] = useAuth();
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -53,6 +55,9 @@ const SignInForm = () => {
         position: "bottom",
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
+      console.log(auth)
+      setAuth(...auth, data)
+      console.log(auth)
       setLoading(false);
     } catch (error) {
       setLoading(false);

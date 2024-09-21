@@ -2,7 +2,6 @@ import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
-import { getSender, getSenderFull } from "../molecules/ChatLogics";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon, ViewIcon } from "@chakra-ui/icons";
@@ -15,6 +14,7 @@ import ProfileModal from "../molecules/ProfileModal";
 import UpdateGroupChatModal from "../molecules/UpdateGroupChatModal";
 import ScrollableChat from "../molecules/ScrollableChat";
 import Icon from "../atoms/Icon";
+import { getSender, getSenderFull } from "@/app/api/chats";
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 

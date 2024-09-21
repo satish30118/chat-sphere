@@ -45,7 +45,7 @@ const MyChats = ({ fetchAgain }) => {
         alignItems="center"
       >
         Chats
-        <GroupChatModal>
+        <GroupChatModal callback={fetchChats}>
           <Button
             display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}

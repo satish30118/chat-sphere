@@ -103,7 +103,8 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       return;
     }
     setLoading(true);
-    const data = addUser(selectedChat._id, user._id);
+    const data = addUser(selectedChat?._id, user?._id);
+    console.log(data)
     setLoading(false);
     if (!data) {
       toast({
@@ -116,8 +117,15 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       });
       return;
     }
+    toast({
+      title: "Added successfully!",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom",
+    });
     setSelectedChat(data);
-    setFetchAgain(!fetchAgain);
+    // setFetchAgain(!fetchAgain);
     setGroupChatName("");
   };
 
@@ -133,7 +141,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       return;
     }
 
-    const data = await removeUser(selectedChat._id, user._id);
+    const data = await removeUser(selectedChat?._id, user?._id);
     if (!data) {
       setLoading(false);
       toast({
@@ -147,7 +155,14 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
 
       return;
     }
-    user._id === user._id ? setSelectedChat() : setSelectedChat(data);
+    toast({
+      title: "Removed successfully!",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom",
+    });
+    user?._id === auth?._id ? setSelectedChat() : setSelectedChat(data);
     setFetchAgain(!fetchAgain);
     fetchMessages();
     setLoading(false);
@@ -175,11 +190,11 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
           <ModalCloseButton />
           <ModalBody display="flex" flexDir="column" alignItems="center">
             <Box w="100%" display="flex" flexWrap="wrap" pb={3}>
-              {selectedChat.users.map((u) => (
+              {selectedChat?.users?.map((u) => (
                 <UserBadgeItem
-                  key={u._id}
+                  key={u?._id}
                   user={u}
-                  admin={selectedChat.groupAdmin}
+                  admin={selectedChat?.groupAdmin}
                   handleFunction={() => handleRemove(u)}
                 />
               ))}
@@ -229,7 +244,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={() => handleRemove(user)} colorScheme="red">
+            <Button onClick={() => handleRemove(auth)} colorScheme="red">
               Leave Group
             </Button>
           </ModalFooter>

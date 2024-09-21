@@ -1,17 +1,30 @@
-import { Avatar, Box, Button, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Tooltip, useDisclosure,Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  Tooltip,
+  useDisclosure,
+  Text,
+} from "@chakra-ui/react";
 import Icon from "../atoms/Icon";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useAuth } from "@/app/context/authContext";
 import SideDrawer from "./SideDrawer";
+import { useRouter } from "next/navigation";
 
 const ChatHeader = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const {auth} = useAuth();
-
-    const logoutHandler = () => {
-      localStorage.removeItem("userInfo");
-      router.push("/auth");
-    };
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { auth } = useAuth();
+  const router = useRouter();
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    router.push("/auth");
+  };
   return (
     <>
       <Box
@@ -23,9 +36,14 @@ const ChatHeader = () => {
         p="10px 20px"
         borderWidth="3px"
       >
-        <Tooltip label="Search friends to chat" hasArrow placement="bottom-end" >
-          <Button variant="ghost" onClick={onOpen} borderWidth='1px' borderRadius='md'>
-            <Icon iconClass="fa-solid fa-magnifying-glass"/>
+        <Tooltip label="Search friends to chat" hasArrow placement="bottom-end">
+          <Button
+            variant="ghost"
+            onClick={onOpen}
+            borderWidth="1px"
+            borderRadius="md"
+          >
+            <Icon iconClass="fa-solid fa-magnifying-glass" />
             <Text d={{ base: "none", md: "flex" }} px={4}>
               Search Friend
             </Text>
@@ -58,7 +76,13 @@ const ChatHeader = () => {
             </MenuList> */}
           </Menu>
           <Menu>
-            <MenuButton borderWidth='1px' borderRadius='md' as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
+            <MenuButton
+              borderWidth="1px"
+              borderRadius="md"
+              as={Button}
+              bg="white"
+              rightIcon={<ChevronDownIcon />}
+            >
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -67,7 +91,11 @@ const ChatHeader = () => {
               />
             </MenuButton>
             <MenuList>
-              <MenuItem icon={<Icon iconClass="fa-solid fa-right-from-bracket"/>}>Dashboard</MenuItem>
+              <MenuItem
+                icon={<Icon iconClass="fa-solid fa-right-from-bracket" />}
+              >
+                Dashboard
+              </MenuItem>
               <MenuDivider />
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
@@ -75,7 +103,7 @@ const ChatHeader = () => {
         </div>
       </Box>
 
-      <SideDrawer isOpen={isOpen}  onOpen={onOpen} onClose={onClose} />
+      <SideDrawer isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </>
   );
 };

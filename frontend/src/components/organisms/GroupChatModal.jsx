@@ -21,13 +21,13 @@ import { findUsers } from "@/app/api/user";
 import UserBadgeItem from "../molecules/avatar/UserBadgeItem";
 import { createGroup } from "@/app/api/group";
 
-const GroupChatModal = ({ children }) => {
+const GroupChatModal = ({ children, callback }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { chats, setChats } = useAuth();
+  const { chats, setChats, setSelectedChat } = useAuth();
   const toast = useToast();
 
   const handleSearch = async (search) => {
@@ -54,8 +54,8 @@ const GroupChatModal = ({ children }) => {
     }
   };
 
-  const handleGroup = (userToAdd) => {
-    if (selectedUsers.includes(userToAdd)) {
+  const handleAdd = (user) => {
+    if (selectedUsers.find((u) => u._id === user._id)) {
       toast({
         title: "User already added",
         status: "warning",
@@ -66,7 +66,7 @@ const GroupChatModal = ({ children }) => {
       return;
     }
 
-    setSelectedUsers([...selectedUsers, userToAdd]);
+    setSelectedUsers([...selectedUsers, user]);
   };
 
   const handleDelete = (delUser) => {
@@ -97,6 +97,8 @@ const GroupChatModal = ({ children }) => {
       return;
     }
     setChats([...chats, data]);
+    setSelectedChat(data)
+    callback();
     onClose();
     toast({
       title: "New Group Chat Created!",
@@ -161,7 +163,7 @@ const GroupChatModal = ({ children }) => {
                   <UserListItem
                     key={user._id}
                     user={user}
-                    handleFunction={() => handleGroup(user)}
+                    handleFunction={() => handleAdd(user)}
                   />
                 ))
             )}

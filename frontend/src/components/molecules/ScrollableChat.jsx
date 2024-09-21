@@ -1,8 +1,8 @@
+import { isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from "@/app/api/chats";
 import { useAuth } from "@/app/context/authContext";
 import { Avatar } from "@chakra-ui/avatar";
 import { Tooltip } from "@chakra-ui/tooltip";
 import ScrollableFeed from "react-scrollable-feed";
-import { isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from "./ChatLogics";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = useAuth();

@@ -5,7 +5,7 @@ import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../molecules/ChatLogics";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, ViewIcon } from "@chakra-ui/icons";
 // import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 
@@ -14,6 +14,7 @@ import { useAuth } from "@/app/context/authContext";
 import ProfileModal from "../molecules/ProfileModal";
 import UpdateGroupChatModal from "../molecules/UpdateGroupChatModal";
 import ScrollableChat from "../molecules/ScrollableChat";
+import Icon from "../atoms/Icon";
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
@@ -34,7 +35,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const { selectedChat, setSelectedChat, user, notification, setNotification } =
+  const { selectedChat, setSelectedChat, auth, notification, setNotification } =
     useAuth();
 
   const fetchMessages = async () => {
@@ -160,14 +161,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       {selectedChat ? (
         <>
           <Text
-            fontSize={{ base: "28px", md: "30px" }}
+            fontSize={{ base: "17px", md: "25px" }}
             pb={3}
             px={2}
             w="100%"
             fontFamily="Work sans"
             display="flex"
             justifyContent={{ base: "space-between" }}
-            alignItems="center"
           >
             <IconButton
               display={{ base: "flex", md: "none" }}
@@ -177,14 +177,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {messages &&
               (!selectedChat.isGroupChat ? (
                 <>
-                  {getSender(user, selectedChat.users)}
-                  <ProfileModal
-                    user={getSenderFull(user, selectedChat.users)}
-                  />
+                  {getSender(selectedChat.users)}
+                  <ProfileModal user={getSenderFull(selectedChat.users)}>
+                    <IconButton
+                      display={{ base: "flex" }}
+                      icon={<ViewIcon />}
+                    />
+                  </ProfileModal>
                 </>
               ) : (
                 <>
-                  {selectedChat.chatName.toUpperCase()}
+                  {selectedChat.chatName}
                   <UpdateGroupChatModal
                     fetchMessages={fetchMessages}
                     fetchAgain={fetchAgain}
@@ -194,7 +197,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ))}
           </Text>
           <Box
-            d="flex"
+            display="flex"
             flexDir="column"
             justifyContent="flex-end"
             p={3}
@@ -206,7 +209,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           >
             {loading ? (
               <Spinner
-                size="xl"
+                size="2xl"
                 w={20}
                 h={20}
                 alignSelf="center"
@@ -248,9 +251,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </Box>
         </>
       ) : (
-        // to get socket.io on same page
-        <Box d="flex" alignItems="center" justifyContent="center" h="100%">
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          h="100%"
+          w="100%"
+          bg="#38B2AC"
+        >
+          <Text fontSize="3xl" pb={3} fontFamily="Work sans" color="white">
             Click on a user to start chatting
           </Text>
         </Box>

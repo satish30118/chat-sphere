@@ -11,7 +11,8 @@ const Chatbox = ({ fetchAgain, setFetchAgain }) => {
       alignItems="center"
       flexDir="column"
       p={3}
-      bg="white"
+      bg="#38B2AC"
+      color="white"
       w={{ base: "100%", md: "68%" }}
       borderWidth="1px"
     >

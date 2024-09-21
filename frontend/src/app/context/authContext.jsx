@@ -1,10 +1,13 @@
-"use client"
+"use client";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null);
+  const [selectedChat, setSelectedChat] = useState();
+  const [chats, setChats] = useState([]);
+  const [notification, setNotification] = useState();
 
   // DEFAULTS HEADERs
   axios.defaults.headers.common["Authorization"] = auth?.token;
@@ -20,7 +23,9 @@ const AuthProvider = ({ children }) => {
 
   return (
     <>
-      <AuthContext.Provider value={[auth, setAuth]}>
+      <AuthContext.Provider
+        value={[auth, setAuth, chats, setChats, selectedChat, setSelectedChat, notification, setNotification]}
+      >
         {children}
       </AuthContext.Provider>
     </>

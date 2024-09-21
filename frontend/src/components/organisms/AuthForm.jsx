@@ -10,8 +10,8 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import SignInForm from "../molecules/SignInForm";
-import SignupForm from "../molecules/SignupForm";
+import SignInForm from "../molecules/auth/SignInForm";
+import SignupForm from "../molecules/auth/SignupForm";
 
 const AuthForm = ({ isSignIn, toggleForm }) => {
   return (

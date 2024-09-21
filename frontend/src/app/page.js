@@ -1,10 +1,21 @@
-import { Button } from "@chakra-ui/react";
-import Image from "next/image";
+"use client"
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    const data = localStorage.getItem("userInfo");
+    if (data) {
+      const parsedData = JSON.parse(data);
+      if(data?.token){
+        router.push("/chats")
+      }else{
+        router.push("/auth")
+      }
+    }
+  }, [router]);
   return (
-    <h2>
-      Home <Button colorScheme="blue">Home</Button>
-    </h2>
-  );
+    <h1>Redirecting....</h1>
+  )
 }

@@ -6,7 +6,7 @@ import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import Icon from "../atoms/Icon";
+import Icon from "../../atoms/Icon";
 import { useAuth } from "@/app/context/authContext";
 
 const SignInForm = () => {
@@ -55,9 +55,9 @@ const SignInForm = () => {
         position: "bottom",
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
-      console.log(auth)
-      setAuth(...auth, data)
-      console.log(auth)
+      console.log(auth);
+      setAuth(...auth, data);
+      console.log(auth);
       setLoading(false);
     } catch (error) {
       setLoading(false);

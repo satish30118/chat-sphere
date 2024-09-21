@@ -33,7 +33,7 @@ const registerUser = async (req, res) => {
         token: generateToken(user._id),
       });
     } else {
-      return res.status(400).json({ message: "User not registered." });
+      return res.status(401).json({ message: "User not registered." });
     }
   } catch (error) {
     console.error(error.message);
@@ -47,7 +47,7 @@ const userLogin = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email or password" });
     }
     const isPasswordValid = await user.matchPassword(password);
     if (isPasswordValid) {

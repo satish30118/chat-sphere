@@ -7,6 +7,8 @@ import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useState } from "react";
+import Icon from "../atoms/Icon";
+import { PhoneIcon, AddIcon, WarningIcon } from "@chakra-ui/icons";
 
 const SignupForm = () => {
   const [show, setShow] = useState(false);
@@ -51,12 +53,11 @@ const SignupForm = () => {
         },
       };
       const { data } = await axios.post(
-        "/api/v1/user",
+        "http://localhost:8000/api/v1/user/register",
         {
           name,
           email,
           password,
-          pic,
         },
         config
       );
@@ -70,17 +71,16 @@ const SignupForm = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      history.push("/chats");
     } catch (error) {
+      setLoading(false);
       toast({
         title: "Error Occured!",
-        description: error.response.data.message,
+        description: error.message,
         status: "error",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false);
     }
   };
 
@@ -132,13 +132,18 @@ const SignupForm = () => {
         </InputGroup>
       </FormControl>
       <Button
-        colorScheme="blue"
+        colorScheme="green"
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
         isLoading={loading}
       >
         Sign Up
+      </Button>
+      <div className="font-bold my-2 text-gray-500">OR</div>
+      <Button variant="solid" colorScheme="blue" width="100%">
+        <Icon iconClass="fab fa-google-plus-g" />
+        <div className="ml-4">SignUp with Google</div>
       </Button>
     </VStack>
   );

@@ -10,12 +10,62 @@ import Icon from "../atoms/Icon";
 
 const SignInForm = () => {
   const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
-  const toast = useToast();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
-  const submitHandler = async () => {};
+  const handleClick = () => setShow(!show);
+  const toast = useToast();
+
+  const submitHandler = async () => {
+    setLoading(true);
+    if (!email || !password) {
+      toast({
+        title: "Please Fill all the Feilds",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:8000/api/v1/user/login",
+        {
+          email,
+          password,
+        },
+        config
+      );
+      console.log(data);
+      toast({
+        title: "Login Successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast({
+        title: "Error Occured!",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
   return (
     <VStack spacing="10px">
       <FormControl id="email" isRequired>
@@ -53,8 +103,9 @@ const SignInForm = () => {
         Sign In
       </Button>
       <div>OR</div>
-      <Button variant="outline" colorScheme="blue" width="100%">
-        <Icon iconClass="fab fa-google-plus-g" /> Login with Google
+      <Button variant="solid" colorScheme="blue" width="100%">
+        <Icon iconClass="fab fa-google-plus-g" />{" "}
+        <div className="ml-4">Login with Google</div>
       </Button>
     </VStack>
   );

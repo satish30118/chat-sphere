@@ -1,14 +1,14 @@
-import AuthForm from '@/components/organisms/AuthForm'
-import AuthPage from '@/components/template/AuthPage'
-import React from 'react'
+import Homeheader from "@/components/molecules/Homeheader";
+import AuthForm from "@/components/organisms/AuthForm";
+import React from "react";
 
 const page = () => {
   return (
     <div>
-        <h2>Auth Page</h2>
-      <AuthPage />
+      <Homeheader />
+      <AuthForm />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

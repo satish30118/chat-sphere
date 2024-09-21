@@ -19,7 +19,7 @@ import { fetchChat } from "@/app/api/chats";
 import axios from "axios";
 
 function SideDrawer({ isOpen, onOpen, onClose }) {
-  const [auth, setSelectedChat, chats, setChats] = useAuth();
+  const {auth, setSelectedChat, chats, setChats} = useAuth();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);

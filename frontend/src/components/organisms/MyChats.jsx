@@ -6,25 +6,23 @@ import { useEffect, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/authContext";
 import LoadingSkeleton from "../molecules/LoadingSkeleton";
-import GroupChatModal from "../molecules/GroupChatModal";
+import GroupChatModal from "./GroupChatModal";
 import { findChats, getSender } from "@/app/api/chats";
 
 const MyChats = ({ fetchAgain }) => {
-  const [selectedChat, setSelectedChat, auth, ] = useAuth();
-  const [chats, setChats] = useState([])
+  const { selectedChat, setSelectedChat, auth } = useAuth();
+  const [chats, setChats] = useState([]);
   const toast = useToast();
 
   const fetchChats = async () => {
-      const data = await findChats();
-      setChats(data);
+    const data = await findChats();
+    setChats(data);
   };
 
   useEffect(() => {
     fetchChats();
     // eslint-disable-next-line
   }, [fetchAgain]);
-
-
 
   return (
     <Box
@@ -33,7 +31,7 @@ const MyChats = ({ fetchAgain }) => {
       alignItems="center"
       p={3}
       bg="white"
-      w={{ base: "100%", md: "32%" }}
+      w={{ base: "100%", md: "32%"}}
       borderWidth="1px"
     >
       <Box
@@ -81,9 +79,7 @@ const MyChats = ({ fetchAgain }) => {
                 key={chat._id}
               >
                 <Text>
-                  {!chat.isGroupChat
-                    ? getSender(chat.users)
-                    : chat.chatName}
+                  {!chat.isGroupChat ? getSender(chat.users) : chat.chatName}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">

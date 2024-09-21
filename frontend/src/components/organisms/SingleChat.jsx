@@ -2,7 +2,7 @@ import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
-import { getSender, getSenderFull } from "./ChatLogics";
+import { getSender, getSenderFull } from "../molecules/ChatLogics";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
@@ -11,8 +11,9 @@ import animationData from "../animations/typing.json";
 
 import io from "socket.io-client";
 import { useAuth } from "@/app/context/authContext";
-import ProfileModal from "./ProfileModal";
-import UpdateGroupChatModal from "./UpdateGroupChatModal";
+import ProfileModal from "../molecules/ProfileModal";
+import UpdateGroupChatModal from "../molecules/UpdateGroupChatModal";
+import ScrollableChat from "../molecules/ScrollableChat";
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
@@ -108,13 +109,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     // socket.on("connected", () => setSocketConnected(true));
     // socket.on("typing", () => setIsTyping(true));
     // socket.on("stop typing", () => setIsTyping(false));
-
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     // fetchMessages();
-
     // selectedChatCompare = selectedChat;
     // eslint-disable-next-line
   }, [selectedChat]);
@@ -132,7 +131,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     //   } else {
     //     setMessages([...messages, newMessageRecieved]);
     //   }
-   // });
+    // });
   });
 
   const typingHandler = (e) => {

@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/layout";
 import { useAuth } from "@/app/context/authContext";
-import SingleChat from "../molecules/SingleChat";
+import SingleChat from "./SingleChat";
 
 const Chatbox = ({ fetchAgain, setFetchAgain }) => {
-  const [selectedChat] = useAuth();
+  const { selectedChat } = useAuth();
 
   return (
     <Box

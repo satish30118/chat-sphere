@@ -11,7 +11,7 @@ import Icon from "../../atoms/Icon";
 import { useAuth } from "@/app/context/authContext";
 
 const SignupForm = () => {
-  const [auth, setAuth] = useAuth();
+  const {auth, setAuth} = useAuth();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();

@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
   return (
     <>
       <AuthContext.Provider
-        value={[
+        value={{
           auth,
           setAuth,
           chats,
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
           setSelectedChat,
           notification,
           setNotification,
-        ]}
+        }}
       >
         {children}
       </AuthContext.Provider>

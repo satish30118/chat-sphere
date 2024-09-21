@@ -6,7 +6,7 @@ import SideDrawer from "./SideDrawer";
 
 const ChatHeader = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [auth] = useAuth();
+    const {auth} = useAuth();
 
     const logoutHandler = () => {
       localStorage.removeItem("userInfo");

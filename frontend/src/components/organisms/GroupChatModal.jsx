@@ -12,21 +12,47 @@ import {
   Input,
   useToast,
   Box,
+  Skeleton,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { useAuth } from "@/app/context/authContext";
 import { useState } from "react";
-import UserListItem from "./avatar/UserListItem";
+import UserListItem from "../molecules/avatar/UserListItem";
+import { findUsers } from "@/app/api/user";
+import UserBadgeItem from "../molecules/avatar/UserBadgeItem";
+import { createGroup } from "@/app/api/group";
 
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { chats, setChats } = useAuth();
   const toast = useToast();
-  const [user, chats, setChats] = useAuth();
+
+  const handleSearch = async (search) => {
+    if (!search) {
+      setSearchResult();
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    const data = await findUsers(search);
+    setSearchResult(data);
+    setLoading(false);
+
+    if (!data) {
+      setLoading(false);
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Search Results",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+  };
 
   const handleGroup = (userToAdd) => {
     if (selectedUsers.includes(userToAdd)) {
@@ -43,37 +69,8 @@ const GroupChatModal = ({ children }) => {
     setSelectedUsers([...selectedUsers, userToAdd]);
   };
 
-  const handleSearch = async (query) => {
-    setSearch(query);
-    if (!query) {
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
-      setLoading(false);
-      setSearchResult(data);
-    } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: "Failed to Load the Search Results",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-    }
-  };
-
   const handleDelete = (delUser) => {
-    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
+    setSelectedUsers(selectedUsers.filter((u) => u._id !== delUser._id));
   };
 
   const handleSubmit = async () => {
@@ -88,39 +85,27 @@ const GroupChatModal = ({ children }) => {
       return;
     }
 
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(
-        `/api/chat/group`,
-        {
-          name: groupChatName,
-          users: JSON.stringify(selectedUsers.map((u) => u._id)),
-        },
-        config
-      );
-      setChats([data, ...chats]);
-      onClose();
-      toast({
-        title: "New Group Chat Created!",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-    } catch (error) {
+    const data = await createGroup(groupChatName, selectedUsers);
+    if (!data) {
       toast({
         title: "Failed to Create the Chat!",
-        description: error.response.data,
         status: "error",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
+      return;
     }
+    console.log(data, chats);
+    setChats([...chats, data]);
+    onClose();
+    toast({
+      title: "New Group Chat Created!",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom",
+    });
   };
 
   return (
@@ -136,20 +121,20 @@ const GroupChatModal = ({ children }) => {
             d="flex"
             justifyContent="center"
           >
-            Create Group Chat
+            Create Group
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody d="flex" flexDir="column" alignItems="center">
             <FormControl>
               <Input
-                placeholder="Chat Name"
+                placeholder="Group Name"
                 mb={3}
                 onChange={(e) => setGroupChatName(e.target.value)}
               />
             </FormControl>
             <FormControl>
               <Input
-                placeholder="Add Users eg: John, Piyush, Jane"
+                placeholder="Add Friends eg: Satish, Govind, Pragyan"
                 mb={1}
                 onChange={(e) => handleSearch(e.target.value)}
               />
@@ -164,7 +149,12 @@ const GroupChatModal = ({ children }) => {
               ))}
             </Box>
             {loading ? (
-              <div>Loading...</div>
+              <div>
+                <Skeleton height="45px" />
+                <Skeleton height="45px" />
+                <Skeleton height="45px" />
+                <Skeleton height="45px" />
+              </div>
             ) : (
               searchResult
                 ?.slice(0, 4)

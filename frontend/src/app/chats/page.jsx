@@ -9,7 +9,7 @@ import Chatbox from "@/components/organisms/ChatBox";
 
 const Chatpage = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
-  const [auth] = useAuth();
+  const {auth} = useAuth();
 
   return (
     <div style={{ width: "100%" }}>

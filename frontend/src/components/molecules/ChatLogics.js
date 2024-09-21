@@ -1,3 +1,6 @@
+import axios from "axios";
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
 export const isSameSenderMargin = (messages, m, i, userId) => {
     // console.log(i === messages.length - 1);
   
@@ -39,9 +42,9 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
   };
   
   export const getSender = (loggedUser, users) => {
-    return users[0]?._id === loggedUser?._id ? users[1].name : users[0].name;
+    return users[0]?._id === userInfo?._id ? users[1].name : users[0].name;
   };
   
   export const getSenderFull = (loggedUser, users) => {
-    return users[0]._id === loggedUser._id ? users[1] : users[0];
+    return users[0]._id === userInfo._id ? users[1] : users[0];
   };

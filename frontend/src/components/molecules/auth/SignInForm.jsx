@@ -10,7 +10,7 @@ import Icon from "../../atoms/Icon";
 import { useAuth } from "@/app/context/authContext";
 
 const SignInForm = () => {
-  const [auth, setAuth] = useAuth();
+  const {auth, setAuth} = useAuth();
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();

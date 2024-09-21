@@ -8,7 +8,7 @@ export default function Home() {
     const data = localStorage.getItem("userInfo");
     if (data) {
       const parsedData = JSON.parse(data);
-      if(data?.token){
+      if(parsedData?.token){
         router.push("/chats")
       }else{
         router.push("/auth")

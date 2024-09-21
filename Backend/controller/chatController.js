@@ -1,7 +1,7 @@
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 
-const singleChat = async (req, res) => {
+const createSingleChat = async (req, res) => {
   const { userId } = req.body;
 
   if (!userId) {
@@ -171,7 +171,7 @@ const removeFromGroup = async (req, res) => {
 };
 
 module.exports = {
-  singleChat,
+  createSingleChat,
   createGroupChat,
   fetchAllChats,
   renameGroup,

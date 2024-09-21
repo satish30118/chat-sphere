@@ -1,29 +1,23 @@
 import axios from "axios";
-const user = JSON.parse(localStorage.getItem("userInfo"));
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 const config = {
   headers: {
     "Content-type": "application/json",
-    Authorization: `Bearer ${user.token}`,
+    Authorization: `Bearer ${userInfo.token}`,
   },
 };
 
-export const accessChat = async (userId) => {
+export const findChats = async () => {
     try {
-      const { data } = await axios.post(`/api/v1/chat`, { userId }, config);
-
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
-      setSelectedChat(data);
-      setLoadingChat(false);
-      onClose();
+       const { data } = await axios.get("/api/v1/chat/", config);
+      return data;
     } catch (error) {
-      toast({
-        title: "Error fetching the chat",
-        description: error.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
+      console.log(error)
+      return;
     }
+  };
+
+  export const getSender = (users) => {
+    return users[0]?._id === userInfo?._id ? users[1].name : users[0].name;
   };

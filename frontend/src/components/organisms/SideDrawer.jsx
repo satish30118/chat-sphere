@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
-import { Box} from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import {
   Drawer,
   DrawerBody,
@@ -9,13 +9,14 @@ import {
   DrawerOverlay,
 } from "@chakra-ui/modal";
 import { useState } from "react";
-import axios from "axios";
 import { Spinner } from "@chakra-ui/spinner";
 import LoadingSkeleton from "../molecules/LoadingSkeleton";
 import { useAuth } from "@/app/context/authContext";
 import { useToast } from "@chakra-ui/react";
 import { findUsers } from "@/app/api/user";
 import UserListItem from "../molecules/avatar/UserListItem";
+import { fetchChat } from "@/app/api/chats";
+import axios from "axios";
 
 function SideDrawer({ isOpen, onOpen, onClose }) {
   const [auth, setSelectedChat, chats, setChats] = useAuth();
@@ -23,7 +24,7 @@ function SideDrawer({ isOpen, onOpen, onClose }) {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
-  const toast = useToast()
+  const toast = useToast();
 
   const handleSearch = async () => {
     if (!search) {
@@ -36,13 +37,13 @@ function SideDrawer({ isOpen, onOpen, onClose }) {
       });
       return;
     }
-    setLoading(true)
-    const data = await findUsers(search)
-    setSearchResult(data)
-    setLoading(false)
+    setLoading(true);
+    const data = await findUsers(search);
+    setSearchResult(data);
+    setLoading(false);
 
-    if(!data){
-      setLoading(false)
+    if (!data) {
+      setLoading(false);
       toast({
         title: "Error Occured!",
         description: "Failed to Load the Search Results",
@@ -52,10 +53,11 @@ function SideDrawer({ isOpen, onOpen, onClose }) {
         position: "bottom-left",
       });
     }
-    
   };
 
   const accessChat = async (userId) => {
+    console.log(userId);
+
     try {
       setLoadingChat(true);
       const config = {
@@ -64,7 +66,7 @@ function SideDrawer({ isOpen, onOpen, onClose }) {
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const { data } = await axios.post(`/api/v1/chat`, { userId }, config);
+      const { data } = await axios.post(`/api/v1/chat/one-to-one`, { userId }, config);
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -82,12 +84,13 @@ function SideDrawer({ isOpen, onOpen, onClose }) {
     }
   };
 
+
   return (
     <>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px" >Search Friends</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">Search Friends</DrawerHeader>
           <DrawerBody>
             <Box display="flex" pb={2}>
               <Input

@@ -1,10 +1,10 @@
 import axios from "axios";
-const user = JSON.parse(localStorage.getItem("userInfo"));
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 const config = {
   headers: {
     "Content-type": "application/json",
-    Authorization: `Bearer ${user.token}`,
+    Authorization: `Bearer ${userInfo.token}`,
   },
 };
 

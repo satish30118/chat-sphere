@@ -8,16 +8,16 @@ import Chatbox from "@/components/organisms/ChatBox";
 
 
 const Chatpage = () => {
-  const [fetchAgain, setFetchAgain] = useState(false);
+  const [fetchChatsAgain, setFetchChatsAgain] = useState(false);
   const {auth} = useAuth();
 
   return (
     <div style={{ width: "100%" }}>
-      {auth && <ChatHeader />}
+      {auth && <ChatHeader fetchChatsAgain={fetchChatsAgain} setFetchChatsAgain={setFetchChatsAgain}/>}
       <Box display="flex" justifyContent="space-between" w="100%" h="89.5vh">
-        {auth && <MyChats fetchAgain={fetchAgain} />}
+        {auth && <MyChats fetchChatsAgain={fetchChatsAgain} />}
         {auth && (
-          <Chatbox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+          <Chatbox fetchChatsAgain={fetchChatsAgain} setFetchChatsAgain={setFetchChatsAgain} />
         )}
       </Box>
     </div>

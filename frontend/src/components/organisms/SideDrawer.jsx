@@ -18,8 +18,14 @@ import UserListItem from "../molecules/avatar/UserListItem";
 import { fetchChat } from "@/app/api/chats";
 import axios from "axios";
 
-function SideDrawer({ isOpen, onOpen, onClose }) {
-  const {auth, setSelectedChat, chats, setChats} = useAuth();
+function SideDrawer({
+  isOpen,
+  onOpen,
+  onClose,
+  fetchChatsAgain,
+  setFetchChatsAgain,
+}) {
+  const { auth, setSelectedChat, chats, setChats } = useAuth();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -66,10 +72,15 @@ function SideDrawer({ isOpen, onOpen, onClose }) {
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const { data } = await axios.post(`/api/v1/chat/one-to-one`, { userId }, config);
+      const { data } = await axios.post(
+        `/api/v1/chat/one-to-one`,
+        { userId },
+        config
+      );
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
+      setFetchChatsAgain(!fetchChatsAgain);
       setLoadingChat(false);
       onClose();
     } catch (error) {
@@ -83,7 +94,6 @@ function SideDrawer({ isOpen, onOpen, onClose }) {
       });
     }
   };
-
 
   return (
     <>

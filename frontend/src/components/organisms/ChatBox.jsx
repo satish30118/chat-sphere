@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/layout";
 import { useAuth } from "@/app/context/authContext";
 import SingleChat from "./SingleChat";
 
-const Chatbox = ({ fetchAgain, setFetchAgain }) => {
+const Chatbox = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { selectedChat } = useAuth();
 
   return (
@@ -16,7 +16,7 @@ const Chatbox = ({ fetchAgain, setFetchAgain }) => {
       w={{ base: "100%", md: "68%" }}
       borderWidth="1px"
     >
-      <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+      <SingleChat fetchChatsAgain={fetchChatsAgain} setFetchChatsAgain={setFetchChatsAgain} />
     </Box>
   );
 };

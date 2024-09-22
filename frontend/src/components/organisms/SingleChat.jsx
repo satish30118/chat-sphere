@@ -15,10 +15,11 @@ import UpdateGroupChatModal from "../molecules/UpdateGroupChatModal";
 import ScrollableChat from "../molecules/ScrollableChat";
 import Icon from "../atoms/Icon";
 import { getSender, getSenderFull } from "@/app/api/chats";
+import { findMessages } from "@/app/api/message";
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
-const SingleChat = ({ fetchAgain, setFetchAgain }) => {
+const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
@@ -40,23 +41,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
-
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
       setLoading(true);
-
-      const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
-        config
-      );
+      const { data } = await findMessages(selectedChat?._id);
       setMessages(data);
       setLoading(false);
-
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
       toast({
@@ -72,12 +61,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
-      socket.emit("stop typing", selectedChat._id);
+      // socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
           headers: {
             "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${auth?.token}`,
           },
         };
         setNewMessage("");
@@ -85,11 +74,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           "/api/message",
           {
             content: newMessage,
-            chatId: selectedChat,
+            chatId: selectedChat?._id,
           },
           config
         );
-        socket.emit("new message", data);
+        // socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -174,27 +163,23 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
-            {messages &&
-              (!selectedChat.isGroupChat ? (
-                <>
-                  {getSender(selectedChat.users)}
-                  <ProfileModal user={getSenderFull(selectedChat.users)}>
-                    <IconButton
-                      display={{ base: "flex" }}
-                      icon={<ViewIcon />}
-                    />
-                  </ProfileModal>
-                </>
-              ) : (
-                <>
-                  {selectedChat.chatName}
-                  <UpdateGroupChatModal
-                    fetchMessages={fetchMessages}
-                    fetchAgain={fetchAgain}
-                    setFetchAgain={setFetchAgain}
-                  />
-                </>
-              ))}
+            {!selectedChat?.isGroupChat ? (
+              <>
+                {getSender(selectedChat?.users)}
+                <ProfileModal user={getSenderFull(selectedChat?.users)}>
+                  <IconButton display={{ base: "flex" }} icon={<ViewIcon />} />
+                </ProfileModal>
+              </>
+            ) : (
+              <>
+                {selectedChat?.chatName}
+                <UpdateGroupChatModal
+                  fetchMessages={fetchMessages}
+                  fetchChatsAgain={fetchChatsAgain}
+                  setFetchChatsAgain={setFetchChatsAgain}
+                />
+              </>
+            )}
           </Text>
           <Box
             display="flex"
@@ -260,7 +245,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           bg="#38B2AC"
         >
           <Text fontSize="3xl" pb={3} fontFamily="Work sans" color="white">
-            Click on a user to start chatting
+            Click to start chatting
           </Text>
         </Box>
       )}

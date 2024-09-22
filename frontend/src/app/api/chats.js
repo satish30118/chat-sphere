@@ -19,7 +19,7 @@ export const findChats = async () => {
 };
 
 export const getSender = (users) => {
-  return users[0]?._id === userInfo?._id ? users[1].name : users[0].name;
+  return users[0]._id === userInfo?._id ? users[1].name : users[0].name;
 };
 
 export const getSenderFull = (users) => {

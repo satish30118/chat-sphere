@@ -9,7 +9,7 @@ import LoadingSkeleton from "../molecules/LoadingSkeleton";
 import GroupChatModal from "./GroupChatModal";
 import { findChats, getSender } from "@/app/api/chats";
 
-const MyChats = ({ fetchAgain }) => {
+const MyChats = ({ fetchChatsAgain }) => {
   const { selectedChat, setSelectedChat, auth } = useAuth();
   const [chats, setChats] = useState([]);
   const toast = useToast();
@@ -22,7 +22,7 @@ const MyChats = ({ fetchAgain }) => {
   useEffect(() => {
     fetchChats();
     // eslint-disable-next-line
-  }, [fetchAgain]);
+  }, [fetchChatsAgain]);
 
   return (
     <Box
@@ -79,7 +79,7 @@ const MyChats = ({ fetchAgain }) => {
                 key={chat._id}
               >
                 <Text>
-                  {!chat.isGroupChat ? getSender(chat.users) : chat.chatName}
+                  {!chat?.isGroupChat ? getSender(chat?.users) : chat?.chatName}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">

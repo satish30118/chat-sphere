@@ -24,7 +24,7 @@ import UserListItem from "./avatar/UserListItem";
 import { addUser, removeUser, renameGroup } from "@/app/api/group";
 import { findUsers } from "@/app/api/user";
 
-const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchMessages, fetchChatsAgain, setFetchChatsAgain }) => {
   const { auth } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
@@ -76,7 +76,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       return;
     }
     setSelectedChat(data);
-    setFetchAgain(!fetchAgain);
+    setFetchChatsAgain(!fetchChatsAgain);
     setGroupChatName("");
   };
 
@@ -125,7 +125,6 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       position: "bottom",
     });
     setSelectedChat(data);
-    // setFetchAgain(!fetchAgain);
     setGroupChatName("");
   };
 
@@ -163,7 +162,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       position: "bottom",
     });
     user?._id === auth?._id ? setSelectedChat() : setSelectedChat(data);
-    setFetchAgain(!fetchAgain);
+    setFetchChatsAgain(!fetchChatsAgain);
     fetchMessages();
     setLoading(false);
   };

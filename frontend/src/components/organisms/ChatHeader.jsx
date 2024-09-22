@@ -17,7 +17,7 @@ import { useAuth } from "@/app/context/authContext";
 import SideDrawer from "./SideDrawer";
 import { useRouter } from "next/navigation";
 
-const ChatHeader = () => {
+const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { auth } = useAuth();
   const router = useRouter();
@@ -103,7 +103,13 @@ const ChatHeader = () => {
         </div>
       </Box>
 
-      <SideDrawer isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <SideDrawer
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        fetchChatsAgain={fetchChatsAgain}
+        setFetchChatsAgain={setFetchChatsAgain}
+      />
     </>
   );
 };

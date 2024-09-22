@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import {
   Modal,
   ModalOverlay,
@@ -19,9 +18,9 @@ import {
 import { useAuth } from "@/app/context/authContext";
 import { useState } from "react";
 import UserListItem from "../molecules/avatar/UserListItem";
-import { findUsers } from "@/app/api/user";
+import { findUsers } from "@/app/services/user";
 import UserBadgeItem from "../molecules/avatar/UserBadgeItem";
-import { createGroup } from "@/app/api/group";
+import { createGroup } from "@/app/services/group";
 
 const GroupChatModal = ({ children, callback }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -76,7 +75,7 @@ const GroupChatModal = ({ children, callback }) => {
   };
 
   const handleSubmit = async () => {
-    if (!groupChatName || selectedUsers.length<1) {
+    if (!groupChatName || selectedUsers.length < 1) {
       toast({
         title: "Please fill all the feilds",
         status: "warning",
@@ -99,7 +98,7 @@ const GroupChatModal = ({ children, callback }) => {
       return;
     }
     setChats([...chats, data]);
-    setSelectedChat(data)
+    setSelectedChat(data);
     callback();
     onClose();
     toast({

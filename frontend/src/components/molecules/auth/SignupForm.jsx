@@ -9,9 +9,11 @@ import axios from "axios";
 import { useState } from "react";
 import Icon from "../../atoms/Icon";
 import { useAuth } from "@/app/context/authContext";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
-  const {auth, setAuth} = useAuth();
+  const { auth, setAuth } = useAuth();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
@@ -21,7 +23,7 @@ const SignupForm = () => {
   const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const submitHandler = async () => {
     setLoading(true);
     if (!name || !email || !password || !confirmpassword) {
@@ -70,8 +72,10 @@ const SignupForm = () => {
         isClosable: true,
         position: "bottom",
       });
+
+      router.push("/chats");
       localStorage.setItem("userInfo", JSON.stringify(data));
-      setAuth({ ...auth, data });
+      setAuth(data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -87,10 +91,12 @@ const SignupForm = () => {
   };
 
   return (
-    <VStack spacing="5px">
+    <VStack spacing="20px">
       <FormControl id="first-name" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
+          p={5}
+          id="first-name"
           placeholder="Enter Your Name"
           onChange={(e) => setName(e.target.value)}
         />
@@ -98,6 +104,8 @@ const SignupForm = () => {
       <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
         <Input
+          p={5}
+          id="email"
           type="email"
           placeholder="Enter Your Email Address"
           onChange={(e) => setEmail(e.target.value)}
@@ -107,13 +115,15 @@ const SignupForm = () => {
         <FormLabel>Password</FormLabel>
         <InputGroup size="md">
           <Input
+            id="password"
+            p={5}
             type={show ? "text" : "password"}
             placeholder="Enter Password"
             onChange={(e) => setPassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
+              {show ? <ViewIcon /> : <ViewOffIcon />}
             </Button>
           </InputRightElement>
         </InputGroup>
@@ -134,7 +144,7 @@ const SignupForm = () => {
         </InputGroup>
       </FormControl>
       <Button
-        colorScheme="green"
+        colorScheme="blue"
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
@@ -142,10 +152,14 @@ const SignupForm = () => {
       >
         Sign Up
       </Button>
-      <div className="font-bold my-2 text-gray-500">OR</div>
-      <Button variant="solid" colorScheme="blue" width="100%">
-        <Icon iconClass="fab fa-google-plus-g" />
-        <div className="ml-4">SignUp with Google</div>
+      <div className="font-bold  text-gray-500">OR</div>
+      <Button variant="outline" colorScheme="blue" width="100%" display="flex">
+        <img
+          src="https://yt3.googleusercontent.com/viNp17XpEF-AwWwOZSj_TvgobO1CGmUUgcTtQoAG40YaYctYMoUqaRup0rTxxxfQvWw3MvhXesw=s900-c-k-c0x00ffffff-no-rj"
+          alt=""
+          className="h-6 w-6"
+        />
+        <div className="ml-4">Login with Google</div>
       </Button>
     </VStack>
   );

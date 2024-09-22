@@ -21,10 +21,14 @@ import {
 import { useState } from "react";
 import UserBadgeItem from "./avatar/UserBadgeItem";
 import UserListItem from "./avatar/UserListItem";
-import { addUser, removeUser, renameGroup } from "@/app/api/group";
-import { findUsers } from "@/app/api/user";
+import { addUser, removeUser, renameGroup } from "@/app/services/group";
+import { findUsers } from "@/app/services/user";
 
-const UpdateGroupChatModal = ({ fetchMessages, fetchChatsAgain, setFetchChatsAgain }) => {
+const UpdateGroupChatModal = ({
+  fetchMessages,
+  fetchChatsAgain,
+  setFetchChatsAgain,
+}) => {
   const { auth } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
@@ -104,7 +108,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchChatsAgain, setFetchChatsAga
     }
     setLoading(true);
     const data = addUser(selectedChat?._id, user?._id);
-    console.log(data)
+    console.log(data);
     setLoading(false);
     if (!data) {
       toast({

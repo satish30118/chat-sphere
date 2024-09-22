@@ -6,17 +6,20 @@ import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import Icon from "../../atoms/Icon";
 import { useAuth } from "@/app/context/authContext";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/navigation";
 
 const SignInForm = () => {
-  const {auth, setAuth} = useAuth();
+  const { auth, setAuth } = useAuth();
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
-  const handleClick = () => setShow(!show);
   const toast = useToast();
+
+  const handleClick = () => setShow(!show);
+  const router = useRouter();
 
   const submitHandler = async () => {
     setLoading(true);
@@ -46,7 +49,7 @@ const SignInForm = () => {
         },
         config
       );
-      console.log(data);
+      // console.log(data)
       toast({
         title: "Login Successful",
         status: "success",
@@ -54,16 +57,16 @@ const SignInForm = () => {
         isClosable: true,
         position: "bottom",
       });
+      router.push("/chats");
       localStorage.setItem("userInfo", JSON.stringify(data));
-      console.log(auth);
       setAuth(data);
-      console.log(auth);
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      console.log(error);
       toast({
         title: "Error Occured!",
-        description: error.message,
+        description: "Invalid password or email",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -72,34 +75,40 @@ const SignInForm = () => {
     }
   };
   return (
-    <VStack spacing="10px">
+    <VStack spacing="20px">
       <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
-        <Input
-          value={email}
-          type="email"
-          placeholder="Enter Your Email Address"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <InputGroup size="md">
+          <Input
+            value={email}
+            p={5}
+            type="email"
+            id="email"
+            placeholder="Enter Your Email Address"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </InputGroup>
       </FormControl>
       <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup size="md">
           <Input
             value={password}
+            p={5}
+            id="password"
             onChange={(e) => setPassword(e.target.value)}
             type={show ? "text" : "password"}
             placeholder="Enter password"
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
+              {show ? <ViewIcon /> : <ViewOffIcon />}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
       <Button
-        colorScheme="green"
+        colorScheme="blue"
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
@@ -107,9 +116,13 @@ const SignInForm = () => {
       >
         Sign In
       </Button>
-      <div>OR</div>
-      <Button variant="solid" colorScheme="blue" width="100%">
-        <Icon iconClass="fab fa-google-plus-g" />{" "}
+      <div className="font-bold  text-gray-500">OR</div>
+      <Button variant="outline" colorScheme="blue" width="100%" display="flex">
+        <img
+          src="https://yt3.googleusercontent.com/viNp17XpEF-AwWwOZSj_TvgobO1CGmUUgcTtQoAG40YaYctYMoUqaRup0rTxxxfQvWw3MvhXesw=s900-c-k-c0x00ffffff-no-rj"
+          alt=""
+          className="h-6 w-6"
+        />
         <div className="ml-4">Login with Google</div>
       </Button>
     </VStack>

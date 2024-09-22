@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
 import { Box } from "@chakra-ui/layout";
@@ -14,9 +14,9 @@ import { Spinner } from "@chakra-ui/spinner";
 import LoadingSkeleton from "../molecules/LoadingSkeleton";
 import { useAuth } from "@/app/context/authContext";
 import { useToast } from "@chakra-ui/react";
-import { findUsers } from "@/app/api/user";
+import { findUsers } from "@/app/services/user";
 import UserListItem from "../molecules/avatar/UserListItem";
-import { fetchChat } from "@/app/api/chats";
+import { fetchChat } from "@/app/services/chats";
 import axios from "axios";
 
 function SideDrawer({

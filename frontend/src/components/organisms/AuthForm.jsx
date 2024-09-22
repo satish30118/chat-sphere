@@ -13,13 +13,19 @@ import {
 import SignInForm from "../molecules/auth/SignInForm";
 import SignupForm from "../molecules/auth/SignupForm";
 
-const AuthForm = ({ isSignIn, toggleForm }) => {
+const AuthForm = () => {
   return (
-    <Container maxW="md" centerContent>
-      <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="2px">
-        <Tabs isFitted variant="enclosed">
+    <Container maxW="lg" centerContent>
+      <Box
+        bg="white"
+        w="100%"
+        p={7}
+        borderWidth="2px"
+        borderColor="gray"
+      >
+        <Tabs isFitted isLazy >
           <TabList mb="1em">
-            <Tab>Sign In</Tab>
+            <Tab >Sign In</Tab>
             <Tab>Sign Up</Tab>
           </TabList>
           <TabPanels>

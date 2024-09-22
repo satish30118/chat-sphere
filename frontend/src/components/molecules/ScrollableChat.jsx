@@ -1,4 +1,9 @@
-import { isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from "@/app/api/chats";
+import {
+  isLastMessage,
+  isSameSender,
+  isSameSenderMargin,
+  isSameUser,
+} from "@/app/services/chats";
 import { useAuth } from "@/app/context/authContext";
 import { Avatar } from "@chakra-ui/avatar";
 import { Tooltip } from "@chakra-ui/tooltip";
@@ -14,7 +19,11 @@ const ScrollableChat = ({ messages }) => {
           <div className="flex" key={msg?._id}>
             {(isSameSender(messages, msg, index, auth?._id) ||
               isLastMessage(messages, index, auth?._id)) && (
-              <Tooltip label={msg.sender.name} placement="bottom-start" hasArrow>
+              <Tooltip
+                label={msg.sender.name}
+                placement="bottom-start"
+                hasArrow
+              >
                 <Avatar
                   mt="7px"
                   mr={1}
@@ -26,15 +35,14 @@ const ScrollableChat = ({ messages }) => {
               </Tooltip>
             )}
             <span
+              className={`bg-blue-100`}
               style={{
-                backgroundColor: `${
-                  msg.sender._id === auth._id ? "green" : "blue"
-                }`,
                 marginLeft: isSameSenderMargin(messages, msg, index, auth._id),
                 marginTop: isSameUser(messages, msg, index, auth._id) ? 3 : 10,
                 borderRadius: "20px",
                 padding: "5px 15px",
                 maxWidth: "75%",
+                color: "black",
               }}
             >
               {msg.content}

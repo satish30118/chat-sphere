@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Stack, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
@@ -8,7 +8,7 @@ import { Button } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/authContext";
 import LoadingSkeleton from "../molecules/LoadingSkeleton";
 import GroupChatModal from "./GroupChatModal";
-import { findChats, getSender } from "@/app/api/chats";
+import { findChats, getSender } from "@/app/services/chats";
 
 const MyChats = ({ fetchChatsAgain }) => {
   const { selectedChat, setSelectedChat, auth } = useAuth();
@@ -32,7 +32,7 @@ const MyChats = ({ fetchChatsAgain }) => {
       alignItems="center"
       p={3}
       bg="white"
-      w={{ base: "100%", md: "32%"}}
+      w={{ base: "100%", md: "32%" }}
       borderWidth="1px"
     >
       <Box
@@ -80,7 +80,9 @@ const MyChats = ({ fetchChatsAgain }) => {
                 key={chat._id}
               >
                 <Text>
-                  {!chat?.isGroupChat ? getSender(auth, chat?.users) : chat?.chatName}
+                  {!chat?.isGroupChat
+                    ? getSender(auth, chat?.users)
+                    : chat?.chatName}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">

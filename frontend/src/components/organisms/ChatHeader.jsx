@@ -17,7 +17,7 @@ import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useAuth } from "@/app/context/authContext";
 import SideDrawer from "./SideDrawer";
 import { useRouter } from "next/navigation";
-import { getSender } from "@/app/api/chats";
+import { getSender } from "@/app/services/chats";
 
 const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

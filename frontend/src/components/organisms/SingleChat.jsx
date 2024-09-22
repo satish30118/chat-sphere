@@ -4,18 +4,15 @@ import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { ArrowBackIcon, ViewIcon } from "@chakra-ui/icons";
-// import Lottie from "react-lottie";
-import animationData from "../animations/typing.json";
 
 import io from "socket.io-client";
 import { useAuth } from "@/app/context/authContext";
 import ProfileModal from "../molecules/ProfileModal";
 import UpdateGroupChatModal from "../molecules/UpdateGroupChatModal";
 import ScrollableChat from "../molecules/ScrollableChat";
-import { getSender, getSenderFull } from "@/app/api/chats";
-import { findMessages, sendMsg } from "@/app/api/message";
+import { getSender, getSenderFull } from "@/app/services/chats";
+import { findMessages, sendMsg } from "@/app/services/message";
 import typingData from "../animations/typing.json";
 import Lottie from "react-lottie";
 const ENDPOINT = "http://localhost:8000";
@@ -107,7 +104,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         console.log("Message belongs to another chat");
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
-          setFetchChatsAgain(!fetchChatsAgain)
+          setFetchChatsAgain(!fetchChatsAgain);
         }
       } else {
         // Add the new message to the current messages
@@ -189,7 +186,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
           >
             {loading ? (
               <Spinner
-                size="2xl"
+                size="xl"
                 w={20}
                 h={20}
                 alignSelf="center"

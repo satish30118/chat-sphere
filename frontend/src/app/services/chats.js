@@ -1,26 +1,10 @@
-"use client"
+"use client";
 
 import axios from "axios";
-const data = (localStorage.getItem("userInfo"));
-var userInfo;
-if(data){
-   userInfo = JSON.parse(data)
-}
-const config = {
-  headers: {
-    "Content-type": "application/json",
-    Authorization: `Bearer ${userInfo?.token}`,
-  },
-};
 
 export const findChats = async () => {
-  try {
-    const { data } = await axios.get("/api/v1/chat/", config);
-    return data;
-  } catch (error) {
-    console.log(error);
-    return;
-  }
+  const { data } = await axios.get("/api/v1/chat/");
+  return data;
 };
 
 export const getSender = (loggedUser, users) => {
@@ -49,7 +33,7 @@ export const isLastMessage = (messages, index, userId) => {
 };
 
 export const isSameSenderMargin = (messages, msg, index, userId) => {
-    if (
+  if (
     index < messages.length - 1 &&
     messages[index + 1].sender._id === msg.sender._id &&
     messages[index].sender._id !== userId
@@ -64,7 +48,6 @@ export const isSameSenderMargin = (messages, msg, index, userId) => {
     return 0;
   else return "auto";
 };
-
 
 export const isSameUser = (messages, msg, index) => {
   return index > 0 && messages[index - 1].sender._id === msg.sender._id;

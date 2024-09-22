@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Icon from "../atoms/Icon";
-import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { BellIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import { useAuth } from "@/app/context/authContext";
 import SideDrawer from "./SideDrawer";
 import { useRouter } from "next/navigation";
@@ -33,25 +33,34 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
+        bg="#f2f9f8"
         w="100%"
         p="10px 20px"
-        borderWidth="3px"
+        borderWidth="2px"
       >
-        <Tooltip label="Search friends to chat" hasArrow placement="bottom-end">
-          <Button
-            variant="ghost"
-            onClick={onOpen}
-            borderWidth="1px"
-            borderRadius="md"
-          >
-            <Icon iconClass="fa-solid fa-magnifying-glass" />
-            <Text d={{ base: "none", md: "flex" }} px={4}>
-              Search Friend
-            </Text>
-          </Button>
-        </Tooltip>
+        <Text>Chat Sphere</Text>
         <div>
+          <Menu >
+            <Tooltip
+              label="Search friends to chat"
+              hasArrow
+              placement="bottom-end"
+              px={7}
+            >
+              <Button
+                variant="ghost"
+                onClick={onOpen}
+                borderWidth="1px"
+                borderRadius="md"
+                bg="white"
+              >
+                <SearchIcon/>
+                <Text display={{ base: "none", md: "flex" }} px={3}>
+                  Search Friend
+                </Text>
+              </Button>
+            </Tooltip>
+          </Menu>
           <Menu>
             <MenuButton p={1}>
               <div className="re">

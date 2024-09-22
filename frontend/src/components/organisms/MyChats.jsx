@@ -4,7 +4,7 @@ import { Box, Stack, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button } from "@chakra-ui/react";
+import { Avatar, Button } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/authContext";
 import LoadingSkeleton from "../molecules/LoadingSkeleton";
 import GroupChatModal from "./GroupChatModal";
@@ -16,8 +16,12 @@ const MyChats = ({ fetchChatsAgain }) => {
   const toast = useToast();
 
   const fetchChats = async () => {
-    const data = await findChats();
-    setChats(data);
+    try {
+      const data = await findChats();
+      setChats(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -30,8 +34,8 @@ const MyChats = ({ fetchChatsAgain }) => {
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
-      p={3}
-      bg="white"
+      p={2}
+      bg="#f2f9f8"
       w={{ base: "100%", md: "32%" }}
       borderWidth="1px"
     >
@@ -39,7 +43,6 @@ const MyChats = ({ fetchChatsAgain }) => {
         pb={3}
         px={3}
         fontSize={{ base: "28px", md: "30px" }}
-        fontFamily="Work sans"
         display="flex"
         w="100%"
         justifyContent="space-between"
@@ -60,7 +63,7 @@ const MyChats = ({ fetchChatsAgain }) => {
         display="flex"
         flexDir="column"
         p={3}
-        bg="#F8F8F8"
+        bg="#f2f9f8"
         w="100%"
         h="100%"
         borderRadius="lg"
@@ -72,26 +75,59 @@ const MyChats = ({ fetchChatsAgain }) => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                color={selectedChat === chat ? "white" : "black"}
-                px={3}
-                py={2}
-                borderRadius="lg"
-                key={chat._id}
+                bg={selectedChat === chat ? "#dee6f2" : "#f2f9f8"}
+                color="black"
+                px={8}
+                py={4}
+                borderRadius="md"
+                key={chat?._id}
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between" // Add this line
+                _hover={{ bg: "#dee6f2" }}
               >
-                <Text>
-                  {!chat?.isGroupChat
-                    ? getSender(auth, chat?.users)
-                    : chat?.chatName}
-                </Text>
-                {chat.latestMessage && (
-                  <Text fontSize="xs">
-                    <b>{chat.latestMessage.sender.name} : </b>
-                    {chat.latestMessage.content.length > 50
-                      ? chat.latestMessage.content.substring(0, 51) + "..."
-                      : chat.latestMessage.content}
+                <Box display="flex" alignItems="center">
+                  <Avatar
+                    mr={2}
+                    size="md"
+                    cursor="pointer"
+                    name={
+                      !chat?.isGroupChat
+                        ? getSender(auth, chat?.users)
+                        : chat?.chatName
+                    }
+                  />
+                  <Box>
+                    <Text>
+                      <b>
+                        {!chat?.isGroupChat
+                          ? getSender(auth, chat?.users)
+                          : chat?.chatName}
+                      </b>
+                    </Text>
+                    {chat?.latestMessage && (
+                      <Text fontSize="sm">
+                        <b>
+                          {chat?.isGroupChat &&
+                            chat?.latestMessage?.sender?.name}
+                          {" ~ "}
+                        </b>
+                        {chat?.latestMessage?.content?.length > 10
+                          ? chat?.latestMessage?.content.substring(0, 11) +
+                            " ..."
+                          : chat?.latestMessage?.content}
+                      </Text>
+                    )}
+                  </Box>
+                </Box>
+                <Box>
+                  <Text fontSize={'xs'}>
+                    {new Date(chat?.updatedAt)?.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </Text>
-                )}
+                </Box>
               </Box>
             ))}
           </Stack>

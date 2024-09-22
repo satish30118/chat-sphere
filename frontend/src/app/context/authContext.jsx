@@ -13,13 +13,16 @@ const AuthProvider = ({ children }) => {
   const router = useRouter();
   // DEFAULTS HEADERs
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${auth?.token}`;
+  axios.defaults.headers.common["Content-Type"] = "application/json";
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     setAuth(userInfo);
     if (!userInfo) router.push("/auth");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
-  // console.log(auth);
+
   return (
     <>
       <AuthContext.Provider

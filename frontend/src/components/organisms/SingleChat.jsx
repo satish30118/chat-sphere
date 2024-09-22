@@ -2,7 +2,16 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
-import { IconButton, Spinner, useToast } from "@chakra-ui/react";
+import {
+  Avatar,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spinner,
+  useToast,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ArrowBackIcon, ViewIcon } from "@chakra-ui/icons";
 
@@ -14,7 +23,9 @@ import ScrollableChat from "../molecules/ScrollableChat";
 import { getSender, getSenderFull } from "@/app/services/chats";
 import { findMessages, sendMsg } from "@/app/services/message";
 import typingData from "../animations/typing.json";
+import svgData from "../animations/home.json";
 import Lottie from "react-lottie";
+import ThreeDotIcon from "../atoms/ThreeDotIcon";
 const ENDPOINT = "http://localhost:8000";
 var socket, selectedChatCompare;
 
@@ -31,6 +42,14 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
     loop: true,
     autoplay: true,
     animationData: typingData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+  const defaultOptions1 = {
+    loop: true,
+    autoplay: true,
+    animationData: svgData,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
@@ -143,11 +162,11 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         <>
           <Text
             fontSize={{ base: "17px", md: "25px" }}
-            pb={3}
-            px={2}
+            p={2}
             w="100%"
-            fontFamily="Work sans"
+            color="black"
             display="flex"
+            alignItems="center"
             justifyContent={{ base: "space-between" }}
           >
             <IconButton
@@ -155,12 +174,41 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
+            <Avatar
+              mx={2}
+              size="md"
+              cursor="pointer"
+              name={
+                !selectedChat?.isGroupChat
+                  ? getSender(auth, selectedChat?.users)
+                  : selectedChat?.chatName
+              }
+            />
             {!selectedChat?.isGroupChat ? (
               <>
                 {getSender(auth, selectedChat?.users)}
-                <ProfileModal user={getSenderFull(auth, selectedChat?.users)}>
-                  <IconButton display={{ base: "flex" }} icon={<ViewIcon />} />
-                </ProfileModal>
+
+                <Menu>
+                  <MenuButton>
+                    <ThreeDotIcon />
+                  </MenuButton>
+                  <MenuList p={0} m={0}>
+                    <ProfileModal
+                      user={getSenderFull(auth, selectedChat?.users)}
+                    >
+                      <MenuItem
+                        _hover={{
+                          bg: "lightblue", // Background color on hover
+                        }}
+                        p={2} // Decrease padding for smaller size
+                        m={0} // Remove margins
+                        fontSize="sm" // Reduce font size
+                      >
+                        View Profile
+                      </MenuItem>
+                    </ProfileModal>
+                  </MenuList>
+                </Menu>
               </>
             ) : (
               <>
@@ -178,10 +226,9 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#E8E8E8"
+            bg="white"
             w="100%"
             h="100%"
-            borderRadius="lg"
             overflowY="hidden"
           >
             {loading ? (
@@ -234,11 +281,14 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
           justifyContent="center"
           h="100%"
           w="100%"
-          bg="#38B2AC"
+          bg="#ffffff"
         >
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans" color="white">
-            Click to start chatting
-          </Text>
+          <Lottie
+            options={defaultOptions1}
+            height={"90%"}
+            width={"100%"}
+            style={{ marginBottom: 15, marginLeft: 0 }}
+          />
         </Box>
       )}
     </>

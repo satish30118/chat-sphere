@@ -23,7 +23,7 @@ const sendMessage = async (req, res) => {
     message = await message.populate("sender", "name email");
     message = await message.populate("chatId");
     message = await User.populate(message, {
-      path: "chat.users",
+      path: "chatId.users",
       select: "name email",
     });
 

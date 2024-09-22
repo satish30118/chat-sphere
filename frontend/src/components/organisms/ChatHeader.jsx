@@ -17,13 +17,14 @@ import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useAuth } from "@/app/context/authContext";
 import SideDrawer from "./SideDrawer";
 import { useRouter } from "next/navigation";
+import { getSender } from "@/app/api/chats";
 
 const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { auth } = useAuth();
+  const { auth, notification, setNotification, setSelectedChat } = useAuth();
   const router = useRouter();
   const logoutHandler = () => {
-   const logout =  localStorage.removeItem("userInfo");
+    const logout = localStorage.removeItem("userInfo");
     router.push("/auth");
   };
   return (
@@ -53,28 +54,34 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         <div>
           <Menu>
             <MenuButton p={1}>
-              {/* <NotificationBadge
-                count={notification.length}
-                effect={Effect.SCALE}
-              /> */}
+              <div className="re">
+                {notification.length > 0 && (
+                  <div className="notification-badge">
+                    <span className="badge">{notification?.length}</span>
+                  </div>
+                )}
+              </div>
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
-            {/* <MenuList pl={2}>
+            <MenuList pl={2}>
               {!notification.length && "No New Messages"}
-              {notification.map((notif) => (
+              {notification?.map((notify) => (
                 <MenuItem
-                  key={notif._id}
+                  key={notify?._id}
                   onClick={() => {
-                    setSelectedChat(notif.chat);
-                    setNotification(notification.filter((n) => n !== notif));
+                    setSelectedChat(notify?.chatId);
+                    setNotification(notification?.filter((n) => n !== notify));
                   }}
                 >
-                  {notif.chat.isGroupChat
-                    ? `New Message in ${notif.chat.chatName}`
-                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                  {notify.chatId.isGroupChat
+                    ? `New Message in ${notify?.chatId?.chatName}`
+                    : `New Message from ${getSender(
+                        auth,
+                        notify?.chatId?.users
+                      )}`}
                 </MenuItem>
               ))}
-            </MenuList> */}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton

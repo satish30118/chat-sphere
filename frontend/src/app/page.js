@@ -1,4 +1,5 @@
 "use client";
+import { Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -12,5 +13,10 @@ export default function Home() {
       router.push("/auth");
     }
   }, [router]);
-  return <h1>Redirecting....</h1>;
+  return (
+    <div className="flex align-center justify-center">
+      <Spinner size="2xl" w={20} h={20} alignSelf="center" margin="auto" /> 
+      <h1>Verifying User, Please wait...</h1>
+    </div>
+  );
 }

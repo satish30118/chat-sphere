@@ -102,13 +102,13 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
 
       if (
         !selectedChatCompare ||
-        selectedChatCompare._id !== newMessageRecieved.chatId._id
+        selectedChatCompare?._id !== newMessageRecieved?.chatId?._id
       ) {
         console.log("Message belongs to another chat");
-        // Handle notifications for other chats if needed
-        // if (!notification.includes(newMessageRecieved)) {
-        //   setNotification([newMessageRecieved, ...notification]);
-        // }
+        if (!notification.includes(newMessageRecieved)) {
+          setNotification([newMessageRecieved, ...notification]);
+          setFetchChatsAgain(!fetchChatsAgain)
+        }
       } else {
         // Add the new message to the current messages
         setMessages((prevMessages) => [...prevMessages, newMessageRecieved]);
@@ -160,8 +160,8 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
             />
             {!selectedChat?.isGroupChat ? (
               <>
-                {getSender(selectedChat?.users)}
-                <ProfileModal user={getSenderFull(selectedChat?.users)}>
+                {getSender(auth, selectedChat?.users)}
+                <ProfileModal user={getSenderFull(auth, selectedChat?.users)}>
                   <IconButton display={{ base: "flex" }} icon={<ViewIcon />} />
                 </ProfileModal>
               </>

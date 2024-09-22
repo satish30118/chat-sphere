@@ -80,7 +80,7 @@ const MyChats = ({ fetchChatsAgain }) => {
                 key={chat._id}
               >
                 <Text>
-                  {!chat?.isGroupChat ? getSender(chat?.users) : chat?.chatName}
+                  {!chat?.isGroupChat ? getSender(auth, chat?.users) : chat?.chatName}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">

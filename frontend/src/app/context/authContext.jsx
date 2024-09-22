@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState();
   const [selectedChat, setSelectedChat] = useState(null);
   const [chats, setChats] = useState([]);
-  const [notification, setNotification] = useState();
+  const [notification, setNotification] = useState([]);
 
   const router = useRouter();
   // DEFAULTS HEADERs

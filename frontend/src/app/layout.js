@@ -3,6 +3,7 @@ import Head from "next/head";
 import "./globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthProvider } from "./context/authContext";
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,7 +39,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-300`}
       >
         <AuthProvider>
-          <ChakraProvider>{children}</ChakraProvider>
+          <Suspense>
+            <ChakraProvider>{children}</ChakraProvider>
+          </Suspense>
         </AuthProvider>
       </body>
     </html>

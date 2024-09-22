@@ -1,3 +1,4 @@
+"use client";
 import {
   Avatar,
   Box,
@@ -22,7 +23,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { auth } = useAuth();
   const router = useRouter();
   const logoutHandler = () => {
-    localStorage.removeItem("userInfo");
+   const logout =  localStorage.removeItem("userInfo");
     router.push("/auth");
   };
   return (

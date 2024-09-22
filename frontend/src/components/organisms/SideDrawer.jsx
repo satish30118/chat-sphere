@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
 import { Box } from "@chakra-ui/layout";
@@ -78,7 +79,7 @@ function SideDrawer({
         config
       );
 
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      if (!chats?.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
       setFetchChatsAgain(!fetchChatsAgain);
       setLoadingChat(false);

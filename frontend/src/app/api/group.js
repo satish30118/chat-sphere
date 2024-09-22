@@ -1,6 +1,11 @@
-import axios from "axios";
-const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+"use client"
 
+import axios from "axios";
+const data = (localStorage.getItem("userInfo"));
+var userInfo;
+if(data){
+   userInfo = JSON.parse(data)
+}
 const config = {
   headers: {
     "Content-type": "application/json",

@@ -39,7 +39,7 @@ const SignInForm = () => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:8000/api/v1/user/login",
+        "api/v1/user/login",
         {
           email,
           password,
@@ -56,7 +56,7 @@ const SignInForm = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
       console.log(auth);
-      setAuth(...auth, data);
+      setAuth(data);
       console.log(auth);
       setLoading(false);
     } catch (error) {

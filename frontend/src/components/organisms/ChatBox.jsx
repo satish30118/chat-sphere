@@ -1,3 +1,4 @@
+'use client'
 import { Box } from "@chakra-ui/layout";
 import { useAuth } from "@/app/context/authContext";
 import SingleChat from "./SingleChat";

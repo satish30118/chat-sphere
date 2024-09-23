@@ -1,15 +1,15 @@
 import localFont from "next/font/local";
-// import Head from "next/head";
+
 import "./globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthProvider } from "./context/authContext";
 import { Suspense } from "react";
-import { Roboto } from '@next/font/google';
+import { Roboto } from "@next/font/google";
 
 const roboto = Roboto({
-  weight: ['400', '700'], 
-  style: ['normal', 'italic'], 
-  subsets: ['latin'], 
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
 });
 
 // const geistSans = localFont({
@@ -31,14 +31,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body 
-        className={roboto.className}
-      >
-        <AuthProvider>
-          <Suspense>
-            <ChakraProvider>{children}</ChakraProvider>
-          </Suspense>
-        </AuthProvider>
+      <body className={roboto.className}>
+        <GoogleOAuthProvider clientId="<your_client_id>">
+          <AuthProvider>
+            <Suspense>
+              <ChakraProvider>{children}</ChakraProvider>
+            </Suspense>
+          </AuthProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

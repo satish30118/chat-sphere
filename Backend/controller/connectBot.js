@@ -1,18 +1,16 @@
-const { Configuration, OpenAIApi } = require("openai");
-const configuration = new Configuration({
+const OpenAI = require("openai");
+
+const client = new OpenAI({
   apiKey:
-    "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",
+    "sk-svcacct-Nig3hA1-3EyIjEb1rIyMpL7ck76401rSvStInuFH9G2LAkH9RoSg9WsPZMijXUTT3BlbkFJDn9j95R4j3GPE6ZyJD2xw4E5RS0kEOsgqAu3eobEP_DFSqA65Nk90v0phv57VqgA",
 });
 
-const openai = new OpenAIApi(configuration);
-
-async function askGPT(question) {
-  const response = await openai.createCompletion({
+async function main() {
+  const chatCompletion = await client.chat.completions.create({
+    messages: [{ role: "user", content: "Say this is a test" }],
     model: "gpt-3.5-turbo",
-    prompt: question,
-    max_tokens: 100,
   });
-  console.log(response.data.choices[0].text);
+  console.log(chatCompletion.choices[0].message);
 }
 
-askGPT("What is ChatGPT?");
+main();

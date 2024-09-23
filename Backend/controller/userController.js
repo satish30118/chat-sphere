@@ -16,7 +16,7 @@ const registerUser = async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      return res.status(400).json({ message: "User already exists." });
+      return res.status(200).json({ message: "User already exists." });
     }
     const user = await User.create({
       name,
@@ -30,6 +30,7 @@ const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        pic: user.pic,
         token: generateToken(user._id),
       });
     } else {
@@ -56,6 +57,7 @@ const userLogin = async (req, res) => {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        pic: user.pic,
         token: generateToken(user._id),
       });
     }
@@ -69,6 +71,69 @@ const userLogin = async (req, res) => {
   }
 };
 
+const googleSignUp = async (req, res) => {
+  try {
+    const { name, email, pic } = req.body;
+    // Validating required fields
+    if (!name || !email) {
+      return res.status(400).json({ message: "Please enter all the fields." });
+    }
+    // Checking if the user already exists
+    const userExists = await User.findOne({ email });
+
+    if (userExists) {
+      return res.status(200).json({ message: "User already exists." });
+    }
+    const user = await User.create({
+      name,
+      email,
+      pic,
+      password: Date.now()
+    });
+
+    if (user) {
+      return res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        pic: user.pic,
+        token: generateToken(user._id),
+      });
+    } else {
+      return res.status(401).json({ message: "User not registered." });
+    }
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({ message: "Server error. Please try again." });
+  }
+};
+const googleLogin = async (req, res) => {
+  try {
+    const { email} = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+   
+
+      return res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        pic: user.pic,
+        token: generateToken(user._id),
+      });
+ 
+  } catch (error) {
+    console.error(error.message);
+    return res
+      .status(500)
+      .json({ message: "Server error. Please try again later." });
+  }
+};
 const FindUsers = async (req, res) => {
   try {
     const keyword = req.query.search
@@ -91,4 +156,4 @@ const FindUsers = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, userLogin, FindUsers };
+module.exports = { registerUser, userLogin, FindUsers, googleLogin, googleSignUp };

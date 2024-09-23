@@ -10,6 +10,7 @@ import { useAuth } from "@/app/context/authContext";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/navigation";
 import { GoogleLogin } from "@react-oauth/google";
+import { googleLogin } from "@/app/services/user";
 
 const SignInForm = () => {
   const { auth, setAuth } = useAuth();
@@ -75,6 +76,24 @@ const SignInForm = () => {
       });
     }
   };
+
+  const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      const data = await googleLogin(credentialResponse);
+      toast({
+        title: "Login Successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      router.push("/chats");
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setAuth(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <VStack spacing="20px">
       <FormControl id="email" isRequired>
@@ -119,21 +138,19 @@ const SignInForm = () => {
       </Button>
       <div className="font-bold  text-gray-500">OR</div>
       <GoogleLogin
-        onSuccess={(credentialResponse) => {
-          console.log("GOOGLE LOGIN ERORR: ", credentialResponse);
-        }}
+        onSuccess={handleGoogleLogin}
         onError={(err) => {
-          console.log("GOOGLE LOGIN ERORR: ", "Login Failed", err);
+          console.log("GOOGLE LOGIN ERORR: ", err);
         }}
       />
-      <Button variant="outline" colorScheme="blue" width="100%" display="flex">
+      {/* <Button variant="outline" colorScheme="blue" width="100%" display="flex">
         <img
           src="https://yt3.googleusercontent.com/viNp17XpEF-AwWwOZSj_TvgobO1CGmUUgcTtQoAG40YaYctYMoUqaRup0rTxxxfQvWw3MvhXesw=s900-c-k-c0x00ffffff-no-rj"
           alt=""
           className="h-6 w-6"
         />
         <div className="ml-4">Login with Google</div>
-      </Button>
+      </Button> */}
     </VStack>
   );
 };

@@ -18,13 +18,15 @@ import { useAuth } from "@/app/context/authContext";
 import SideDrawer from "./SideDrawer";
 import { useRouter } from "next/navigation";
 import { getSender } from "@/app/services/chats";
+import { googleLogout } from "@react-oauth/google";
 
 const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { auth, notification, setNotification, setSelectedChat } = useAuth();
   const router = useRouter();
   const logoutHandler = () => {
-    const logout = localStorage.removeItem("userInfo");
+    localStorage.removeItem("userInfo");
+    googleLogout();
     router.push("/auth");
   };
   return (

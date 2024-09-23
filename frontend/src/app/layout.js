@@ -30,9 +30,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
-  const clientId =
-    "699203776256-qb7raloagk07dt1tatvr8uu2a1kgn02l.apps.googleusercontent.com";
+  const clientId = process.env.GOOGLE_CLIENT_ID;
   return (
     <html lang="en">
       <body className={roboto.className}>

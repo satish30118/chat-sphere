@@ -21,7 +21,6 @@ export const googleSignUp = async (credentialResponse) => {
   const user = {
     name: decoded?.name,
     email: decoded?.email,
-    password: Date.now(),
     pic: decoded?.picture,
   };
   const { data } = await axios.post(`/api/v1/user/google-signup`, user)

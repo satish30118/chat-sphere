@@ -38,9 +38,11 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         p="10px 20px"
         borderWidth="2px"
       >
-        <Text>Chat Sphere</Text>
+        <Text pb={3} px={3} fontSize={{ base: "23px", md: "30px" }}>
+          <b>Chat Sphere</b>
+        </Text>
         <div>
-          <Menu >
+          <Menu>
             <Tooltip
               label="Search friends to chat"
               hasArrow
@@ -54,7 +56,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                 borderRadius="md"
                 bg="white"
               >
-                <SearchIcon/>
+                <SearchIcon />
                 <Text display={{ base: "none", md: "flex" }} px={3}>
                   Search Friend
                 </Text>
@@ -107,7 +109,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                 src={auth?.pic}
               />
             </MenuButton>
-            <MenuList>
+            <MenuList p={0}>
               <MenuItem
                 icon={<Icon iconClass="fa-solid fa-right-from-bracket" />}
               >

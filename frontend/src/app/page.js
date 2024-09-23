@@ -1,5 +1,5 @@
 "use client";
-import { Box, Spinner, Text,} from "@chakra-ui/react";
+import { Box, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "./context/authContext";
@@ -18,7 +18,7 @@ export default function Home() {
       };
       const { data } = await axios.get(`/api/v1/user/authentication`, config);
       // console.log(data);
-      if (!data?.status == 401) {
+      if (data.status) {
         router.push("/chats");
       } else {
         router.push("/auth");
@@ -29,7 +29,11 @@ export default function Home() {
     }
   };
   useEffect(() => {
-    userAuthentication();
+    if (auth?.token) {
+      userAuthentication();
+    } else {
+      router.push("/auth");
+    }
   }, []);
   return (
     <Box

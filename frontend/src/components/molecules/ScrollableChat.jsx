@@ -8,6 +8,7 @@ import { useAuth } from "@/app/context/authContext";
 import { Avatar } from "@chakra-ui/avatar";
 import { Tooltip } from "@chakra-ui/tooltip";
 import ScrollableFeed from "react-scrollable-feed";
+import { Text } from "@chakra-ui/react";
 
 const ScrollableChat = ({ messages }) => {
   const { auth } = useAuth();
@@ -35,21 +36,27 @@ const ScrollableChat = ({ messages }) => {
               </Tooltip>
             )}
             <span
-              className={`bg-blue-100`}
               style={{
                 marginLeft: isSameSenderMargin(messages, msg, index, auth._id),
-                marginTop: isSameUser(messages, msg, index, auth._id) ? 3 : 10,
-                borderRadius: "20px",
-                padding: "5px 15px",
+                marginTop: isSameUser(messages, msg, index, auth._id) ? 5 : 10,
+                borderRadius: "8px",
+                padding: "12px 22px",
                 maxWidth: "75%",
                 color: "black",
+                background: "#dee6f2",
               }}
             >
-              {msg.content}
+              {msg?.content}
+              <Text textAlign={"right"} fontSize={"xs"}>
+                {new Date(msg?.updatedAt)?.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </Text>
             </span>
           </div>
         ))}
-    </ScrollableFeed>
+    </ScrollableFeed> 
   );
 };
 

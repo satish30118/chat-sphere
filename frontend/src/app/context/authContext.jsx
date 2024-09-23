@@ -19,7 +19,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     setAuth(userInfo);
-    if (!userInfo) router.push("/auth");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 

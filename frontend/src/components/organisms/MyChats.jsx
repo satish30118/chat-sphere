@@ -107,21 +107,20 @@ const MyChats = ({ fetchChatsAgain }) => {
                     </Text>
                     {chat?.latestMessage && (
                       <Text fontSize="sm">
-                        <b>
-                          {chat?.isGroupChat &&
-                            chat?.latestMessage?.sender?.name}
-                          {" ~ "}
-                        </b>
-                        {chat?.latestMessage?.content?.length > 10
-                          ? chat?.latestMessage?.content.substring(0, 11) +
-                            " ..."
-                          : chat?.latestMessage?.content}
+                        {chat?.isGroupChat && chat?.latestMessage?.sender?.name}
+                        {" ~ "}
+                        <span className="text-gray-500">
+                          {chat?.latestMessage?.content?.length > 10
+                            ? chat?.latestMessage?.content.substring(0, 11) +
+                              " ..."
+                            : chat?.latestMessage?.content}
+                        </span>
                       </Text>
                     )}
                   </Box>
                 </Box>
                 <Box>
-                  <Text fontSize={'xs'}>
+                  <Text fontSize={"xs"}>
                     {new Date(chat?.updatedAt)?.toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",

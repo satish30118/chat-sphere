@@ -12,7 +12,7 @@ export default function Chatpage() {
   const { auth } = useAuth();
 
   return (
-    <div style={{ width: "100%", background:"#f2f9f8" }}>
+    <div style={{ width: "100%", height:"100%", background:"#f2f9f8" }}>
       {auth && (
         <Suspense>
           <ChatHeader

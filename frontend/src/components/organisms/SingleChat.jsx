@@ -7,6 +7,7 @@ import {
   IconButton,
   Menu,
   MenuButton,
+  MenuDivider,
   MenuItem,
   MenuList,
   Spinner,
@@ -26,6 +27,7 @@ import typingData from "../animations/typing.json";
 import svgData from "../animations/home.json";
 import Lottie from "react-lottie";
 import ThreeDotIcon from "../atoms/ThreeDotIcon";
+import { removeUser } from "@/app/services/group";
 const ENDPOINT = "http://localhost:8000";
 var socket, selectedChatCompare;
 
@@ -156,6 +158,36 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
     }, timerLength);
   };
 
+
+  const handleLeave = async () => {
+    try {
+
+      const data = await removeUser(selectedChat?._id, auth?._id);
+      toast({
+        title: "Leave successfully!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setSelectedChat();
+      setFetchChatsAgain(!fetchChatsAgain);
+      fetchMessages();
+    ;
+    } catch (error) {
+      console.log(error)
+      toast({
+        title: "Error Occured!",
+        description: "Can't remove from group",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
+
+
   return (
     <>
       {selectedChat ? (
@@ -197,12 +229,13 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                       user={getSenderFull(auth, selectedChat?.users)}
                     >
                       <MenuItem
+                        bg="lightgray"
                         _hover={{
-                          bg: "lightblue", // Background color on hover
+                          bg: "#f2f9f8",
                         }}
-                        p={2} // Decrease padding for smaller size
-                        m={0} // Remove margins
-                        fontSize="sm" // Reduce font size
+                        p={3}
+                        m={0}
+                        fontSize="md"
                       >
                         View Profile
                       </MenuItem>
@@ -213,11 +246,43 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
             ) : (
               <>
                 {selectedChat?.chatName}
-                <UpdateGroupChatModal
-                  fetchMessages={fetchMessages}
-                  fetchChatsAgain={fetchChatsAgain}
-                  setFetchChatsAgain={setFetchChatsAgain}
-                />
+                <Menu>
+                  <MenuButton>
+                    <ThreeDotIcon />
+                  </MenuButton>
+                  <MenuList p={0} m={0}>
+                    <UpdateGroupChatModal
+                      fetchMessages={fetchMessages}
+                      fetchChatsAgain={fetchChatsAgain}
+                      setFetchChatsAgain={setFetchChatsAgain}
+                    >
+                      <MenuItem
+                        bg="#dee6f2"
+                        _hover={{
+                          bg: "#f2f9f8",
+                        }}
+                        p={3}
+                        m={0}
+                        fontSize="md"
+                      >
+                        Update group
+                      </MenuItem>
+                    </UpdateGroupChatModal>
+                  
+                    <MenuItem
+                        bg="lightgray"
+                        _hover={{
+                          bg: "#f2f9f8",
+                        }}
+                        p={3}
+                        m={0}
+                        fontSize="md" 
+                        onClick={handleLeave}
+                      >
+                        Leave group
+                      </MenuItem>
+                  </MenuList>
+                </Menu>
               </>
             )}
           </Text>
@@ -277,16 +342,18 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
       ) : (
         <Box
           display="flex"
+          flexDir={"row"}
           alignItems="center"
           justifyContent="center"
-          h="100%"
           w="100%"
+          pt={6}
+          h="100%"
           bg="#ffffff"
         >
           <Lottie
             options={defaultOptions1}
-            height={"90%"}
-            width={"100%"}
+            height={"70%"}
+            width={"70%"}
             style={{ marginBottom: 15, marginLeft: 0 }}
           />
         </Box>

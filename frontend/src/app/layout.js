@@ -5,6 +5,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { AuthProvider } from "./context/authContext";
 import { Suspense } from "react";
 import { Roboto } from "@next/font/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const roboto = Roboto({
   weight: ["400", "700"],

@@ -30,10 +30,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  
+  const clientId =
+    "699203776256-qb7raloagk07dt1tatvr8uu2a1kgn02l.apps.googleusercontent.com";
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <GoogleOAuthProvider clientId="<your_client_id>">
+        <GoogleOAuthProvider clientId={clientId}>
           <AuthProvider>
             <Suspense>
               <ChakraProvider>{children}</ChakraProvider>

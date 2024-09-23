@@ -9,6 +9,7 @@ import { useToast } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/authContext";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/navigation";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignInForm = () => {
   const { auth, setAuth } = useAuth();
@@ -117,6 +118,14 @@ const SignInForm = () => {
         Sign In
       </Button>
       <div className="font-bold  text-gray-500">OR</div>
+      <GoogleLogin
+        onSuccess={(credentialResponse) => {
+          console.log("GOOGLE LOGIN ERORR: ", credentialResponse);
+        }}
+        onError={(err) => {
+          console.log("GOOGLE LOGIN ERORR: ", "Login Failed", err);
+        }}
+      />
       <Button variant="outline" colorScheme="blue" width="100%" display="flex">
         <img
           src="https://yt3.googleusercontent.com/viNp17XpEF-AwWwOZSj_TvgobO1CGmUUgcTtQoAG40YaYctYMoUqaRup0rTxxxfQvWw3MvhXesw=s900-c-k-c0x00ffffff-no-rj"

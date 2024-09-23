@@ -2,12 +2,12 @@ const OpenAI = require("openai");
 
 const client = new OpenAI({
   apiKey:
-    "sk-svcacct-Nig3hA1-3EyIjEb1rIyMpL7ck76401rSvStInuFH9G2LAkH9RoSg9WsPZMijXUTT3BlbkFJDn9j95R4j3GPE6ZyJD2xw4E5RS0kEOsgqAu3eobEP_DFSqA65Nk90v0phv57VqgA",
+    "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",
 });
 
 async function main() {
   const chatCompletion = await client.chat.completions.create({
-    messages: [{ role: "user", content: "Say this is a test" }],
+    messages: [{ role: "user", content: "hello" }],
     model: "gpt-3.5-turbo",
   });
   console.log(chatCompletion.choices[0].message);

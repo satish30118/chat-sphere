@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const db = process.env.MONGODB_URL;
+const db =
+  process.env.MONGODB_URL ||
+  "mongodb+srv://satishresearch369:YQr9o9wgVcZWVX6g@cluster0.ey3wm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 const connectDB = async () => {
   try {
@@ -8,7 +10,7 @@ const connectDB = async () => {
     }
     await mongoose.connect(db, {
       family: 4,
-      serverSelectionTimeoutMS: 50000, 
+      serverSelectionTimeoutMS: 50000,
     });
     console.log("DATA BASE CONNECTED SUCCESSFULLY!!");
   } catch (error) {

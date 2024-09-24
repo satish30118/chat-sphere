@@ -13,6 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Icon from "../atoms/Icon";
+import ChatbotIcon from "../atoms/ChatbotIcon"
 import { BellIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import { useAuth } from "@/app/context/authContext";
 import SideDrawer from "./SideDrawer";
@@ -52,18 +53,17 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               label="AI powered Chatbot"
               hasArrow
               placement="bottom-end"
-              px={7}
+              
             >
               <AIBotModal>
               <Button
                 variant="gost"
-               
-                borderRadius="md"
-                marginRight={5}
+              size={{base:8, md:12}}
+                marginRight={2}
                 bg="#f2f9f8"
               >
-               <ChatbotIcon  size={4} h={2} />
-                <Text display={{ base: "none", md: "flex" }} px={3}>
+               <ChatbotIcon  />
+                <Text display={{ base: "none", md: "flex" }} px={2}>
                   Chat Bot
                 </Text>
               </Button></AIBotModal>

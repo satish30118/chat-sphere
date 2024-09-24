@@ -88,7 +88,7 @@ const googleSignUp = async (req, res) => {
       name,
       email,
       pic,
-      password: Date.now()
+      password: Date.now(),
     });
 
     if (user) {
@@ -110,23 +110,34 @@ const googleSignUp = async (req, res) => {
 };
 const googleLogin = async (req, res) => {
   try {
-    const { email} = req.body;
+    const { name, email, pic } = req.body;
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "User not found" });
-    }
-   
-
-      return res.status(200).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        pic: user.pic,
-        token: generateToken(user._id),
+      const newUser = await User.create({
+        name,
+        email,
+        pic,
+        password: Date.now(),
       });
- 
+      return res.status(200).json({
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        isAdmin: newUser.isAdmin,
+        pic: newUser.pic,
+        token: generateToken(newUser._id),
+      });
+    }
+
+    return res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
   } catch (error) {
     console.error(error.message);
     return res
@@ -156,4 +167,10 @@ const FindUsers = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, userLogin, FindUsers, googleLogin, googleSignUp };
+module.exports = {
+  registerUser,
+  userLogin,
+  FindUsers,
+  googleLogin,
+  googleSignUp,
+};

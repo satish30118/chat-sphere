@@ -9,9 +9,12 @@ export const findUsers = async (search) => {
 export const googleLogin = async (credentialResponse) => {
   const decoded = jwtDecode(credentialResponse?.credential);
   // console.log(decoded);
-  const { data } = await axios.post(`/api/v1/user/google-login`, {
+  const user = {
+    name: decoded?.name,
     email: decoded?.email,
-  });
+    pic: decoded?.picture,
+  };
+  const { data } = await axios.post(`/api/v1/user/google-login`, user);
   return data;
 };
 

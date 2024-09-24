@@ -80,6 +80,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                 variant="ghost"
                 onClick={onOpen}
                 borderWidth="1px"
+                px={1}
                 borderRadius="md"
                 bg="white"
               >

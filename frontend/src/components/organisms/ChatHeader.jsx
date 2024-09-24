@@ -22,7 +22,6 @@ import { getSender } from "@/app/services/chats";
 import { googleLogout } from "@react-oauth/google";
 import ProfileModal from "../molecules/ProfileModal";
 import AIBotModal from "./AIBotModal";
-import ChatbotIcon from "../atoms/ChatBotIcon";
 
 const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

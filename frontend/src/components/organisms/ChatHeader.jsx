@@ -59,7 +59,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               <Button
                 variant="gost"
               size={{base:4, md:12}}
-                marginRight={{base:1, md:3}}
+                mr={{base:2, md:4}}
                 bg="#f2f9f8"
               >
                <ChatbotIcon  />
@@ -80,7 +80,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                 variant="ghost"
                 onClick={onOpen}
                 borderWidth="1px"
-                px={1}
+                p={{base:1, md:2}}
                 borderRadius="md"
                 bg="white"
               >

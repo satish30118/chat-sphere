@@ -1,6 +1,6 @@
 ---
 ## This repository has been developed as part of my ongoing journey in software development
-####  It is also submitted in association with my internship application at I'm Beside You.
+###  It is also submitted in association with my internship application at I'm Beside You.
 
 - Name : Satish Kumar Maurya
 - Email : satish_km@ch.iitr.ac.in
@@ -12,7 +12,7 @@
 
 ## Introduction
 
-Chat Sphere is real-time chat application.
+Chat Sphere is real-time chat application, developed using NextJs, NodeJs and socket.io
 
 ## Features
 
@@ -33,7 +33,7 @@ Chat Sphere is real-time chat application.
 2. Navigate to the frontend directory by running `cd frontend`.
 3. Install all dependencies by running `npm i`.
 4. Create a **.env.local** file with the following configurations:
-   - NEXT_PUBLIC_API_URL
+   - Backend URL
    - GOOGLE_CLIENT_ID
    - Videosdk.live authToken
 4. Start the frontend by running `npm run dev`.

@@ -59,7 +59,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               <Button
                 variant="gost"
               size={{base:4, md:12}}
-                marginRight={{base:1, md:3}
+                marginRight={{base:1, md:3}}
                 bg="#f2f9f8"
               >
                <ChatbotIcon  />

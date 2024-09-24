@@ -14,8 +14,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { ArrowBackIcon, ViewIcon } from "@chakra-ui/icons";
-
+import { ArrowBackIcon, PhoneIcon, ViewIcon } from "@chakra-ui/icons";
+import { MdVideocam, MdCall } from "react-icons/md";
 import io from "socket.io-client";
 import { useAuth } from "@/app/context/authContext";
 import ProfileModal from "../molecules/ProfileModal";
@@ -28,6 +28,8 @@ import svgData from "../animations/home.json";
 import Lottie from "react-lottie";
 import ThreeDotIcon from "../atoms/ThreeDotIcon";
 import { removeUser } from "@/app/services/group";
+import { useRouter } from "next/navigation";
+import { authToken, createMeeting } from "@/app/services/callapi";
 const ENDPOINT = "http://localhost:8000";
 var socket, selectedChatCompare;
 
@@ -158,10 +160,8 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
     }, timerLength);
   };
 
-
   const handleLeave = async () => {
     try {
-
       const data = await removeUser(selectedChat?._id, auth?._id);
       toast({
         title: "Leave successfully!",
@@ -173,9 +173,8 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
       setSelectedChat();
       setFetchChatsAgain(!fetchChatsAgain);
       fetchMessages();
-    ;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
         title: "Error Occured!",
         description: "Can't remove from group",
@@ -186,13 +185,17 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
       });
     }
   };
-
+  const router = useRouter();
+  const handleVideoCall = async () => {
+    const roomid = await createMeeting({ token: authToken });
+    router.push(`calling/${roomid}`);
+  };
 
   return (
     <>
       {selectedChat ? (
         <>
-          <Text
+          <Box
             fontSize={{ base: "17px", md: "25px" }}
             p={2}
             w="100%"
@@ -206,22 +209,38 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
-            <Avatar
-              mx={2}
-              size="md"
-              cursor="pointer"
-              name={
-                !selectedChat?.isGroupChat
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <Avatar
+                mx={2}
+                size="md"
+                cursor="pointer"
+                name={
+                  !selectedChat?.isGroupChat
+                    ? getSender(auth, selectedChat?.users)
+                    : selectedChat?.chatName
+                }
+              />
+              <Text>
+                {!selectedChat?.isGroupChat
                   ? getSender(auth, selectedChat?.users)
-                  : selectedChat?.chatName
-              }
-            />
+                  : selectedChat?.chatName}
+              </Text>
+            </Box>
             {!selectedChat?.isGroupChat ? (
-              <>
-                {getSender(auth, selectedChat?.users)}
-
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <IconButton
+                  mr={6}
+                  icon={<PhoneIcon />}
+                  onClick={() => setSelectedChat("")}
+                />
+                <IconButton
+                  mr={6}
+                  fontSize={22}
+                  icon={<MdVideocam />}
+                  onClick={handleVideoCall}
+                />
                 <Menu>
-                  <MenuButton>
+                  <MenuButton pr={4}>
                     <ThreeDotIcon />
                   </MenuButton>
                   <MenuList p={0} m={0}>
@@ -242,50 +261,63 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                     </ProfileModal>
                   </MenuList>
                 </Menu>
-              </>
+              </Box>
             ) : (
               <>
-                {selectedChat?.chatName}
-                <Menu>
-                  <MenuButton>
-                    <ThreeDotIcon />
-                  </MenuButton>
-                  <MenuList p={0} m={0}>
-                    <UpdateGroupChatModal
-                      fetchMessages={fetchMessages}
-                      fetchChatsAgain={fetchChatsAgain}
-                      setFetchChatsAgain={setFetchChatsAgain}
-                    >
-                      <MenuItem
-                        bg="#dee6f2"
-                        _hover={{
-                          bg: "#f2f9f8",
-                        }}
-                        p={3}
-                        m={0}
-                        fontSize="md"
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <IconButton
+                    mr={6}
+                    icon={<PhoneIcon />}
+                    onClick={() => setSelectedChat("")}
+                  />
+                  <IconButton
+                    mr={6}
+                    fontSize={22}
+                    icon={<MdVideocam />}
+                    onClick={handleVideoCall}
+                  />
+
+                  <Menu>
+                    <MenuButton pr={5}>
+                      <ThreeDotIcon />
+                    </MenuButton>
+                    <MenuList p={0} m={0}>
+                      <UpdateGroupChatModal
+                        fetchMessages={fetchMessages}
+                        fetchChatsAgain={fetchChatsAgain}
+                        setFetchChatsAgain={setFetchChatsAgain}
                       >
-                        Update group
-                      </MenuItem>
-                    </UpdateGroupChatModal>
-                  
-                    <MenuItem
+                        <MenuItem
+                          bg="#dee6f2"
+                          _hover={{
+                            bg: "#f2f9f8",
+                          }}
+                          p={3}
+                          m={0}
+                          fontSize="md"
+                        >
+                          Update group
+                        </MenuItem>
+                      </UpdateGroupChatModal>
+
+                      <MenuItem
                         bg="lightgray"
                         _hover={{
                           bg: "#f2f9f8",
                         }}
                         p={3}
                         m={0}
-                        fontSize="md" 
+                        fontSize="md"
                         onClick={handleLeave}
                       >
                         Leave group
                       </MenuItem>
-                  </MenuList>
-                </Menu>
+                    </MenuList>
+                  </Menu>
+                </Box>
               </>
             )}
-          </Text>
+          </Box>
           <Box
             display="flex"
             flexDir="column"

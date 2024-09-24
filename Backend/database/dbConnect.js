@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const db =
-  process.env.MONGODB_URL ||
-  "mongodb+srv://satishresearch369:YQr9o9wgVcZWVX6g@cluster0.ey3wm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
+  process.env.MONGODB_URL
 const connectDB = async () => {
   try {
     if (!db) {

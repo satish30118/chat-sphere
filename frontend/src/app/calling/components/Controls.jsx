@@ -2,6 +2,7 @@ import { useAuth } from "@/app/context/authContext";
 import { getSender } from "@/app/services/chats";
 import { PhoneIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Button, IconButton } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import {
   BiVideo,
   BiVideoOff,
@@ -11,10 +12,15 @@ import {
 const { useMeeting } = require("@videosdk.live/react-sdk");
 
 export function Controls(props) {
-  const { auth} = useAuth();
-  const { webcamStream, micStream, webcamOn, micOn, isLocal, displayName } =
-    useParticipant(props.participantId);
+  const [mic, setMic] = useState(true);
+  const [video, setVideo] = useState(true);
+
+  const { auth } = useAuth();
   const { leave, toggleMic, toggleWebcam } = useMeeting();
+
+  useEffect(() => {
+    if(props.callType=='audio') toggleWebcam()
+  }, []);
   return (
     <Box
       display="flex"
@@ -45,34 +51,46 @@ export function Controls(props) {
         >
           End Call
         </Button>
-        {webcamOn ? (
-          <IconButton
-            mx={5}
-            colorScheme="teal"
-            aria-label="Call Segun"
-            size="md"
-            icon={<BiVideo />}
-            onClick={() => toggleWebcam()}
-          />
+        {props.callType == "video" ? (
+          video ? (
+            <IconButton
+              mx={5}
+              colorScheme="teal"
+              aria-label="Call Segun"
+              size="md"
+              icon={<BiVideo />}
+              onClick={() => {
+                toggleWebcam();
+                setVideo(!video);
+              }}
+            />
+          ) : (
+            <IconButton
+              mx={5}
+              colorScheme="teal"
+              aria-label="Call Segun"
+              size="md"
+              icon={<BiVideoOff />}
+              onClick={() => {
+                toggleWebcam();
+                setVideo(!video);
+              }}
+            />
+          )
         ) : (
-          <IconButton
-            mx={5}
-            colorScheme="teal"
-            aria-label="Call Segun"
-            size="md"
-            icon={<BiVideoOff />}
-            onClick={() => toggleWebcam()}
-          />
-        )}{" "}
-        |
-        {micOn ? (
+          <></>
+        )}
+        {mic ? (
           <IconButton
             mx={5}
             colorScheme="teal"
             aria-label="Call Segun"
             size="md"
             icon={<BiMicrophone />}
-            onClick={() => toggleMic()}
+            onClick={() => {
+              toggleMic();
+              setMic(!mic);
+            }}
           />
         ) : (
           <IconButton
@@ -81,7 +99,10 @@ export function Controls(props) {
             aria-label="Call Segun"
             size="md"
             icon={<BiMicrophoneOff />}
-            onClick={() => toggleMic()}
+            onClick={() => {
+              toggleMic();
+              setMic(!mic);
+            }}
           />
         )}
       </Box>

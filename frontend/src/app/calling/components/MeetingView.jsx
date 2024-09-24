@@ -29,11 +29,12 @@ export function MeetingView(props) {
     <div className="container">
       {joined && joined == "JOINED" ? (
         <div>
-          <Controls  participantId={participantId}/>
+          <Controls callType = {props.callType}/>
           <Box display="flex" flexWrap='wrap' w='100%' justifyContent="center" alignItems="center">
             {[...participants.keys()].map((participantId) => (
               <ParticipantView
                 participantId={participantId}
+                callType={props.callType}
                 key={participantId}
               />
             ))}

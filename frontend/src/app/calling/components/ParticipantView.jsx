@@ -43,7 +43,7 @@ export function ParticipantView(props) {
   }, [micStream, micOn]);
 
   return (
-    <Box w="100%" minWidth="400px" h="600px" borderWidth="2px" m={3}>
+    <Box w='500px' h="350px" borderWidth={2} m={3}>
       <Box
         display="flex"
         flexDir="row"
@@ -65,14 +65,15 @@ export function ParticipantView(props) {
           />
           <b>{auth?.name}</b>
         </Box>
-        <Box display="flex" flexDir="row" alignItems="center" size="sm">
-          {webcamOn ? <BiVideo /> : <BiVideoOff />} |
+        <Box display="flex" flexDir="row" alignItems="center" size="lg" justifyContent='space-between' mr={3}>
+          {webcamOn ? <BiVideo /> : <BiVideoOff />}
+          <Box w={5}></Box>
           {micOn ? <BiMicrophone /> : <BiMicrophoneOff />}
         </Box>
       </Box>
-      <Box>
+      <Box w='496px' h='300px'>
         <audio ref={micRef} autoPlay playsInline muted={isLocal} />
-        {webcamOn ? (
+        {props?.calltype == 'video' && webcamOn ? (
           <ReactPlayer
             playsinline // extremely crucial prop
             pip={false}
@@ -82,8 +83,7 @@ export function ParticipantView(props) {
             playing={true}
             //
             url={videoStream}
-            //
-            height={"500px"}
+            height={"100%"}
             width={"100%"}
             onError={(err) => {
               console.log(err, "participant video error");
@@ -94,8 +94,9 @@ export function ParticipantView(props) {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            h="500px"
-            w="100%"
+            h="450px"
+            w="99%"
+            borderWidth={2}
           >
             <Avatar
               mr={2}

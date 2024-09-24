@@ -188,7 +188,14 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const router = useRouter();
   const handleVideoCall = async () => {
     const roomid = await createMeeting({ token: authToken });
-    router.push(`calling/${roomid}`);
+    router.push(`calling/video/${roomid}`);
+    socket.emmit('video call', roomid)
+  };
+  const handleAudioCall = async () => {
+    const roomid = await createMeeting({ token: authToken });
+    router.push(`calling/audio/${roomid}`);
+    socket.emmit('audio call', roomid)
+
   };
 
   return (
@@ -268,7 +275,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                   <IconButton
                     mr={6}
                     icon={<PhoneIcon />}
-                    onClick={() => setSelectedChat("")}
+                    onClick={handleAudioCall}
                   />
                   <IconButton
                     mr={6}

@@ -1,16 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { MeetingProvider } from "@videosdk.live/react-sdk";
-import { MeetingView } from "../components/MeetingView";
-import { JoinScreen } from "../components/JoinScreen";
-import { authToken, createMeeting } from "../../services/callapi";
+import { MeetingView } from "../../components/MeetingView";
+import { JoinScreen } from "../../components/JoinScreen";
+import { authToken, createMeeting } from "../../../services/callapi";
 import { useParams } from "next/navigation";
 import { useAuth } from "@/app/context/authContext";
 
 function Room() {
   const {auth} = useAuth()
   const username = auth?.name;
-  const { roomid } = useParams();
+  const { type, roomid } = useParams();
   const [meetingId, setMeetingId] = useState(roomid);
   const onMeetingLeave = () => {
     setMeetingId(null);
@@ -28,7 +28,7 @@ function Room() {
         }}
         token={authToken}
       >
-        <MeetingView meetingId={meetingId} onMeetingLeave={onMeetingLeave} />
+        <MeetingView meetingId={meetingId} onMeetingLeave={onMeetingLeave} callType={type} />
       </MeetingProvider>
     )
   );

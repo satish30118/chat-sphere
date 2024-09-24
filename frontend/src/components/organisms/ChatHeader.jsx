@@ -74,7 +74,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               label="Search friends to chat"
               hasArrow
               placement="bottom-end"
-              px={{base:1, md:7}
+              px={{base:1, md:7}}
             >
               <Button
                 variant="ghost"

@@ -14,7 +14,7 @@ const ChatbotIcon = () => {
       w="20px" 
       h="20px" 
     >
-      <Icon as={FaCommentDots} w={8} h={8} /> // Adjust icon size here
+      <Icon as={FaCommentDots} w={8} h={8} />
     </Box>
   );
 };

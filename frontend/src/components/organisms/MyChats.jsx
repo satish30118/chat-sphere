@@ -8,7 +8,7 @@ import { Avatar, Button } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/authContext";
 import LoadingSkeleton from "../molecules/LoadingSkeleton";
 import GroupChatModal from "./GroupChatModal";
-import { findChats, getSender } from "@/app/services/chats";
+import { findChats, getSender, getSenderFull, getSenderPic } from "@/app/services/chats";
 
 const MyChats = ({ fetchChatsAgain }) => {
   const { selectedChat, setSelectedChat, auth ,chats, setChats} = useAuth();
@@ -18,7 +18,7 @@ const MyChats = ({ fetchChatsAgain }) => {
     try {
       const data = await findChats();
       setChats(data);
-      console.log(data)
+      // console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +42,7 @@ const MyChats = ({ fetchChatsAgain }) => {
       <Box
         pb={3}
         px={3}
-        fontSize={{ base: "28px", md: "30px" }}
+        fontSize={{ base: "22px", md: "30px" }}
         display="flex"
         w="100%"
         justifyContent="space-between"
@@ -62,7 +62,7 @@ const MyChats = ({ fetchChatsAgain }) => {
       <Box
         display="flex"
         flexDir="column"
-        p={3}
+        p={{base:1, md:3}}
         bg="#f2f9f8"
         w="100%"
         h="100%"
@@ -77,7 +77,7 @@ const MyChats = ({ fetchChatsAgain }) => {
                 cursor="pointer"
                 bg={selectedChat === chat ? "#dee6f2" : "#f2f9f8"}
                 color="black"
-                px={8}
+                px={{base:4, md:8}}
                 py={4}
                 borderRadius="md"
                 key={chat?._id}
@@ -95,6 +95,10 @@ const MyChats = ({ fetchChatsAgain }) => {
                       !chat?.isGroupChat
                         ? getSender(auth, chat?.users)
                         : chat?.chatName  
+                    }
+                    pic={ 
+                      !chat?.isGroupChat &&
+                         getSenderPic(auth, chat?.users)
                     }
                     
                   />

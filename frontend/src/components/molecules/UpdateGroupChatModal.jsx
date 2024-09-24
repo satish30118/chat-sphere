@@ -30,15 +30,13 @@ const UpdateGroupChatModal = ({
   setFetchChatsAgain,
   children,
 }) => {
-  const { auth } = useAuth();
+  const { auth,  selectedChat, setSelectedChat,  } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [renameloading, setRenameLoading] = useState(false);
   const toast = useToast();
-
-  const { selectedChat, setSelectedChat, user } = useAuth();
 
   const handleSearch = async (search) => {
     if (!search) {
@@ -111,7 +109,7 @@ const UpdateGroupChatModal = ({
         return;
       }
       setLoading(true);
-      const data = addUser(selectedChat?._id, user?._id);
+      const data = await addUser(selectedChat?._id, user?._id);
       setLoading(false);
       toast({
         title: "Added successfully!",
@@ -120,6 +118,7 @@ const UpdateGroupChatModal = ({
         isClosable: true,
         position: "bottom",
       });
+      // console.log(data)
       setSelectedChat(data);
       setGroupChatName("");
     } catch (error) {

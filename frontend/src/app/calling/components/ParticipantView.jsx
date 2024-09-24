@@ -42,13 +42,49 @@ export function ParticipantView(props) {
     }
   }, [micStream, micOn]);
   return (
-    <Box w="500px" h="350px" borderWidth={2} m={3}>
-      <Box
+    <Box w={{base: "95%", md: "700px"} }  h='100%' borderWidth={2} borderColor={'black'} m={3}>
+  
+      <Box w={{base:"95%", md:"697px"}} >
+        <audio ref={micRef} autoPlay playsInline muted={isLocal} />
+        {props.callType == "video" && webcamOn ? (
+          <ReactPlayer
+            playsinline // crucial prop for mobile
+            pip={false}
+            light={false}
+            controls={false}
+            muted={true}
+            playing={true}
+            url={videoStream}
+            height={"100%"}
+            width={"100%"}
+            onError={(err) => {
+              console.error(err, "participant video error");
+            }}
+          />
+        ) : (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            h="300px"
+            w="100%"
+          >
+            <Avatar
+              mr={2}
+              size="lg"
+              cursor="pointer"
+              name={auth?.name}
+              pic={auth?.pic}
+            />
+          </Box>
+        )}
+      </Box>  
+        <Box
         display="flex"
         flexDir="row"
         alignItems="center"
         justifyContent="space-between"
-        w="100%"
+        w={{base: "95%", md: "697px"} }
         mx="auto"
         p={2}
         px={5}
@@ -76,41 +112,6 @@ export function ParticipantView(props) {
           <Box w={5}></Box>
           {micOn ? <BiMicrophone /> : <BiMicrophoneOff />}
         </Box>
-      </Box>
-      <Box w="500px" h="300px">
-        <audio ref={micRef} autoPlay playsInline muted={isLocal} />
-        {props.callType == "video" && webcamOn ? (
-          <ReactPlayer
-            playsinline // crucial prop for mobile
-            pip={false}
-            light={false}
-            controls={false}
-            muted={true}
-            playing={true}
-            url={videoStream}
-            height={"100%"}
-            width={"500px"}
-            onError={(err) => {
-              console.error(err, "participant video error");
-            }}
-          />
-        ) : (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            h="300px"
-            w="100%"
-          >
-            <Avatar
-              mr={2}
-              size="lg"
-              cursor="pointer"
-              name={auth?.name}
-              pic={auth?.pic}
-            />
-          </Box>
-        )}
       </Box>
     </Box>
   );

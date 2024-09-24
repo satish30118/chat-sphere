@@ -221,6 +221,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
           <Box
             fontSize={{ base: "17px", md: "25px" }}
             p={2}
+            pl={{base:1, md:2}}
             w="100%"
             color="black"
             display="flex"
@@ -235,7 +236,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
             <Box display="flex" alignItems="center" justifyContent="center">
               <Avatar
                 mx={2}
-                size="md"
+                size={{base:"sm", md:"md"}}
                 cursor="pointer"
                 name={
                   !selectedChat?.isGroupChat
@@ -243,7 +244,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                     : selectedChat?.chatName
                 }
               />
-              <Text>
+              <Text fontSize={{base:"sm", md:"md", lg:"lg"}}>
                 {!selectedChat?.isGroupChat
                   ? getSender(auth, selectedChat?.users)
                   : selectedChat?.chatName}
@@ -252,18 +253,19 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
             {!selectedChat?.isGroupChat ? (
               <Box display="flex" alignItems="center" justifyContent="center">
                 <IconButton
-                  mr={6}
-                  icon={<PhoneIcon />}
-                  onClick={() => setSelectedChat("")}
-                />
-                <IconButton
-                  mr={6}
+                  mr={{base:2, md:6}}
                   fontSize={22}
                   icon={<MdVideocam />}
                   onClick={handleVideoCall}
                 />
+                <IconButton
+                 mr={{base:2, md:6}}
+                  icon={<PhoneIcon />}
+                  onClick={handleAudioCall}
+                />
+                
                 <Menu>
-                  <MenuButton pr={4}>
+                  <MenuButton mr={{base:2, md:4}}>
                     <ThreeDotIcon />
                   </MenuButton>
                   <MenuList p={0} m={0}>
@@ -271,7 +273,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                       user={getSenderFull(auth, selectedChat?.users)}
                     >
                       <MenuItem
-                        bg="lightgray"
+                        bg="white"
                         _hover={{
                           bg: "#f2f9f8",
                         }}
@@ -288,20 +290,21 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
             ) : (
               <>
                 <Box display="flex" alignItems="center" justifyContent="center">
-                  <IconButton
-                    mr={6}
-                    icon={<PhoneIcon />}
-                    onClick={handleAudioCall}
-                  />
-                  <IconButton
-                    mr={6}
-                    fontSize={22}
-                    icon={<MdVideocam />}
-                    onClick={handleVideoCall}
-                  />
+                <IconButton
+                  mr={{base:2, md:6}}
+                  fontSize={22}
+                  icon={<MdVideocam />}
+                  onClick={handleVideoCall}
+                />
+                <IconButton
+                 mr={{base:2, md:6}}
+                  icon={<PhoneIcon />}
+                  onClick={handleAudioCall}
+                />
+                 
 
                   <Menu>
-                    <MenuButton pr={5}>
+                    <MenuButton mr={{base:2, md:4}}>
                       <ThreeDotIcon />
                     </MenuButton>
                     <MenuList p={0} m={0}>
@@ -311,7 +314,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                         setFetchChatsAgain={setFetchChatsAgain}
                       >
                         <MenuItem
-                          bg="#dee6f2"
+                          bg="white"
                           _hover={{
                             bg: "#f2f9f8",
                           }}
@@ -324,7 +327,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
                       </UpdateGroupChatModal>
 
                       <MenuItem
-                        bg="lightgray"
+                        bg="white"
                         _hover={{
                           bg: "#f2f9f8",
                         }}

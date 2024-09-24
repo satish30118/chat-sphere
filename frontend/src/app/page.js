@@ -2,17 +2,20 @@
 import { Box, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useAuth } from "./context/authContext";
 
 export default function Home() {
-  const { auth } = useAuth();
+
   const router = useRouter();
 
+
   useEffect(() => {
-    if (auth?.token) {
+    const data = localStorage.getItem('userInfo')
+    const userinfo = JSON.parse(data)
+    // console.log(userinfo)
+    if (userinfo?.token) {
       router.push("/chats");
     } else {
-      router.push("/auth");
+      router.push("/auth"); 
     }
   }, []);
   return (

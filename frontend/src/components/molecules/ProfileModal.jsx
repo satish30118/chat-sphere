@@ -18,7 +18,7 @@ const ProfileModal = ({ user, children }) => {
   return (
     <>
       <span onClick={onOpen}>{children}</span>
-      <Modal size="lg"   onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal size="md"   onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent bg="#f2f9f8" >
           <ModalHeader
@@ -39,14 +39,14 @@ const ProfileModal = ({ user, children }) => {
           >
             <Avatar
               mb={3}
-              h={200}
-              w={200}
+              h={100}
+              w={100}
               cursor="pointer"
               src={user?.pic}
               alt={user?.name}
             />
             <Text
-              fontSize={{ base: "18px", md: "23px" }}
+              fontSize={{ base: "15px", md: "23px" }}
             >
               Email: {user.email}
             </Text>

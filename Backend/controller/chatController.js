@@ -132,15 +132,14 @@ const addToGroup = async (req, res) => {
       chatId,
       { $push: { users: userId } },
       { new: true }
-    )
-      .populate("users", "-password")
-      .populate("groupAdmin", "-password");
+    ).populate("users", "-password")
+    .populate("groupAdmin", "-password");
 
     if (!addedChat) {
       return res.status(404).json({ message: "Chat not found" });
     }
-
-    return res.json(addedChat);
+console.log(addedChat)
+    return res.status(200).json(addedChat);
   } catch (error) {
     console.error("Error adding to group:", error.message);
     return res.status(500).json({ message: error.message });

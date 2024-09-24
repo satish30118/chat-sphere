@@ -1,7 +1,7 @@
 import { useAuth } from "@/app/context/authContext";
 import { getSender } from "@/app/services/chats";
 import { PhoneIcon } from "@chakra-ui/icons";
-import { Avatar, Box, Button, IconButton } from "@chakra-ui/react";
+import { Avatar, Box, Button, IconButton, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -36,18 +36,19 @@ export function Controls(props) {
       <Box display="flex" flexDir="row" alignItems="center">
         <Avatar
           mr={2}
-          size="md"
+          size={{base:"sm", md:"md"}}
           cursor="pointer"
           name={auth?.name}
           pic={auth?.pic}
         />
-        <b>{auth?.name}</b>
+        <Text fontSize={{base:"12px", md:"20px"}}>{auth?.name}</Text>
       </Box>
       <Box display="flex" flexDir="row" alignItems="center">
         <Button
           colorScheme="red"
           variant="solid"
-          mx={5}
+          mx={{base:2, md:5}}
+          fontSize={{base:"12px", md:"16px"}}
           onClick={() => {leave(); router.push('/chats')}}
         >
           End Call
@@ -55,7 +56,7 @@ export function Controls(props) {
         {props.callType == "video" ? (
           video ? (
             <IconButton
-              mx={5}
+            mx={{base:2, md:5}}
               colorScheme="teal"
               aria-label="Call Segun"
               size="md"

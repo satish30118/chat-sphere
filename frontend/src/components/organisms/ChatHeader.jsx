@@ -39,10 +39,10 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         alignItems="center"
         bg="#f2f9f8"
         w="100%"
-        p="10px 20px"
+        p="10px 15px"
         borderWidth="2px"
       >
-        <Text pb={3} px={3} fontSize={{ base: "23px", md: "30px" }}>
+        <Text px={3}  fontSize={{ base: "17px", md: "25px", lg:"30px" }}>
           <b>Chat Sphere</b>
         </Text>
         <div>

@@ -90,8 +90,5 @@ deploy Link: [(https://chat-sphere-theta.vercel.app/)]
 
 Documentation Link: [(https://docs.google.com/document/d/16TOESBsWthpVqDGz7-Mnw4Ydm60v_FOQ/edit?usp=sharing&ouid=113073976967163913013&rtpof=true&sd=true)]
 
-## Short Video Link
-
-Short Video Link: [()]
 
 ---

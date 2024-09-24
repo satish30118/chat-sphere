@@ -13,9 +13,8 @@ import ReactPlayer from "react-player";
 export function ParticipantView(props) {
   const { auth } = useAuth();
   const micRef = useRef(null);
-  const { webcamStream, micStream, webcamOn, micOn, isLocal } = useParticipant(
-    props.participantId
-  );
+  const { webcamStream, micStream, webcamOn, micOn, isLocal, displayName } =
+    useParticipant(props.participantId);
 
   const videoStream = useMemo(() => {
     if (webcamOn && webcamStream) {
@@ -26,19 +25,6 @@ export function ParticipantView(props) {
   }, [webcamStream, webcamOn]);
 
   useEffect(() => {
-    // Request video permissions if the call type is 'video'
-    const requestVideoPermissions = async () => {
-      if (props.callType === "video") {
-        try {
-          await navigator.mediaDevices.getUserMedia({ video: true });
-        } catch (error) {
-          console.error("Error requesting video permissions:", error);
-        }
-      }
-    };
-
-    requestVideoPermissions();
-
     if (micRef.current) {
       if (micOn && micStream) {
         const mediaStream = new MediaStream();
@@ -47,13 +33,14 @@ export function ParticipantView(props) {
         micRef.current.srcObject = mediaStream;
         micRef.current
           .play()
-          .catch((error) => console.error("Audio play failed", error));
+          .catch((error) =>
+            console.error("videoElem.current.play() failed", error)
+          );
       } else {
         micRef.current.srcObject = null;
       }
     }
-  }, [micStream, micOn, props.callType]); // Include callType in the dependency array
-
+  }, [micStream, micOn]);
   return (
     <Box w="500px" h="350px" borderWidth={2} m={3}>
       <Box

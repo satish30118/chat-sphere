@@ -4,13 +4,21 @@ import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import {
   Avatar,
+  Button,
   IconButton,
   Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -42,6 +50,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [openCallTab, setOpenCallTab] = useState(false);
   const [callingRoomId, setCallingRoomId] = useState();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
 
@@ -202,7 +211,9 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
     router.push(`calling/audio/${roomid}`);
     socket.emit("calling", { roomid, selectedChat, callerId: auth?._id });
   };
-
+   const handleReceiveCall = async () => {
+    router.push(`calling/video/${callingRoomId}`);
+  };
   return (
     <>
       {selectedChat ? (
@@ -397,6 +408,40 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
           <Lottie options={defaultOptions1} />
         </Box>
       )}
+
+      {/* Calling Modal */}
+      <Modal size="lg" onClose={onClose} isOpen={openCallTab} isCentered>
+        <ModalOverlay />
+        <ModalContent bg="#f2f9f8">
+          <ModalHeader
+            fontSize="25px"
+            display="flex"
+            justifyContent="center"
+            borderWidth="1px"
+          >
+            Call Receiving....
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody
+            display="flex"
+            flexDir="row"
+            alignItems="center"
+            justifyContent="space-between"
+            py={6}
+          >
+            <Button variant="solid" colorScheme={"green"} onClick={handleReceiveCall}>
+              Pick Up
+            </Button>
+            <Button
+              variant="solid"
+              colorScheme={"red"}
+              onClick={() => setOpenCallTab(false)}
+            >
+              Reject
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

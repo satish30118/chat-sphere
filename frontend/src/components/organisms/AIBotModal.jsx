@@ -100,6 +100,11 @@ const AIBotModal = ({ user, children }) => {
           </ModalBody>
         </ModalContent>
       </Modal>
+
+
+
+
+      
     </>
   );
 };

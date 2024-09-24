@@ -14,7 +14,7 @@ export default function Home() {
     } else {
       router.push("/auth");
     }
-  }, [router]);
+  }, []);
   return (
     <Box
       display="flex"

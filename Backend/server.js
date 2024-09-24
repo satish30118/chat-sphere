@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
 
   socket.on("typing", (room) => socket.in(room).emit("typing"));
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
-   
+
   socket.on("new message", (newMessage) => {
     var chat = newMessage?.chatId;
     // console.log(newMessage)
@@ -71,6 +71,17 @@ io.on("connection", (socket) => {
       if (user?._id == newMessage.sender._id) return;
 
       socket.in(user?._id).emit("message recieved", newMessage);
+    });
+  });
+
+  socket.on("calling", ({ roomid, selectedChat, callerId }) => {
+    console.log(roomid, selectedChat, callerId);
+    if (!selectedChat?.users) return console.log("calling users not defined");
+
+    selectedChat?.users?.forEach((user) => {
+      if (user?._id == callerId) return;
+
+      socket.in(user?._id).emit("call recieved", roomid);
     });
   });
 

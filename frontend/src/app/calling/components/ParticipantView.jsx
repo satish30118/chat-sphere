@@ -6,15 +6,16 @@ import {
   BiMicrophone,
   BiMicrophoneOff,
 } from "react-icons/bi";
-const { useParticipant } = require("@videosdk.live/react-sdk");
-const { useRef, useMemo, useEffect } = require("react");
-const { default: ReactPlayer } = require("react-player");
+import { useParticipant } from "@videosdk.live/react-sdk";
+import { useRef, useMemo, useEffect } from "react";
+import ReactPlayer from "react-player";
 
 export function ParticipantView(props) {
   const { auth } = useAuth();
   const micRef = useRef(null);
-  const { webcamStream, micStream, webcamOn, micOn, isLocal, displayName } =
-    useParticipant(props.participantId);
+  const { webcamStream, micStream, webcamOn, micOn, isLocal } = useParticipant(
+    props.participantId
+  );
 
   const videoStream = useMemo(() => {
     if (webcamOn && webcamStream) {
@@ -25,6 +26,19 @@ export function ParticipantView(props) {
   }, [webcamStream, webcamOn]);
 
   useEffect(() => {
+    // Request video permissions if the call type is 'video'
+    const requestVideoPermissions = async () => {
+      if (props.callType === "video") {
+        try {
+          await navigator.mediaDevices.getUserMedia({ video: true });
+        } catch (error) {
+          console.error("Error requesting video permissions:", error);
+        }
+      }
+    };
+
+    requestVideoPermissions();
+
     if (micRef.current) {
       if (micOn && micStream) {
         const mediaStream = new MediaStream();
@@ -33,17 +47,15 @@ export function ParticipantView(props) {
         micRef.current.srcObject = mediaStream;
         micRef.current
           .play()
-          .catch((error) =>
-            console.error("videoElem.current.play() failed", error)
-          );
+          .catch((error) => console.error("Audio play failed", error));
       } else {
         micRef.current.srcObject = null;
       }
     }
-  }, [micStream, micOn]);
+  }, [micStream, micOn, props.callType]); // Include callType in the dependency array
 
   return (
-    <Box w='500px' h="350px" borderWidth={2} m={3}>
+    <Box w="500px" h="350px" borderWidth={2} m={3}>
       <Box
         display="flex"
         flexDir="row"
@@ -65,28 +77,34 @@ export function ParticipantView(props) {
           />
           <b>{auth?.name}</b>
         </Box>
-        <Box display="flex" flexDir="row" alignItems="center" size="lg" justifyContent='space-between' mr={3}>
+        <Box
+          display="flex"
+          flexDir="row"
+          alignItems="center"
+          size="lg"
+          justifyContent="space-between"
+          mr={3}
+        >
           {webcamOn ? <BiVideo /> : <BiVideoOff />}
           <Box w={5}></Box>
           {micOn ? <BiMicrophone /> : <BiMicrophoneOff />}
         </Box>
       </Box>
-      <Box w='496px' h='300px'>
+      <Box w="500px" h="300px">
         <audio ref={micRef} autoPlay playsInline muted={isLocal} />
-        {props?.calltype == 'video' && webcamOn ? (
+        {props.callType == "video" && webcamOn ? (
           <ReactPlayer
-            playsinline // extremely crucial prop
+            playsinline // crucial prop for mobile
             pip={false}
             light={false}
             controls={false}
             muted={true}
             playing={true}
-            //
             url={videoStream}
             height={"100%"}
             width={"100%"}
             onError={(err) => {
-              console.log(err, "participant video error");
+              console.error(err, "participant video error");
             }}
           />
         ) : (
@@ -94,9 +112,8 @@ export function ParticipantView(props) {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            h="450px"
-            w="99%"
-            borderWidth={2}
+            h="300px"
+            w="100%"
           >
             <Avatar
               mr={2}

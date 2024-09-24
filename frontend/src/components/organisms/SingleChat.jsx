@@ -40,6 +40,9 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
+  const [openCallTab, setOpenCallTab] = useState(false);
+  const [callingRoomId, setCallingRoomId] = useState();
+
   const toast = useToast();
 
   const defaultOptions = {
@@ -134,7 +137,10 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         setMessages((prevMessages) => [...prevMessages, newMessageRecieved]);
       }
     });
-
+    socket.on("call recieved", (roomid) => {
+      setOpenCallTab(true);
+      setCallingRoomId(roomid)
+    });
     // Clean up the listener when the component unmounts or the selected chat changes
     return () => {
       socket.off("message recieved");
@@ -189,13 +195,12 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const handleVideoCall = async () => {
     const roomid = await createMeeting({ token: authToken });
     router.push(`calling/video/${roomid}`);
-    socket.emmit('video call', roomid)
+    socket.emit("calling", { roomid, selectedChat, callerId: auth?._id });
   };
   const handleAudioCall = async () => {
     const roomid = await createMeeting({ token: authToken });
     router.push(`calling/audio/${roomid}`);
-    socket.emmit('audio call', roomid)
-
+    socket.emit("calling", { roomid, selectedChat, callerId: auth?._id });
   };
 
   return (

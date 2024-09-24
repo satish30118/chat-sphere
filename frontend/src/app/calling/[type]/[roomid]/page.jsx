@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { MeetingProvider } from "@videosdk.live/react-sdk";
 import { MeetingView } from "../../components/MeetingView";
-import { JoinScreen } from "../../components/JoinScreen";
 import { authToken, createMeeting } from "../../../services/callapi";
 import { useParams } from "next/navigation";
 import { useAuth } from "@/app/context/authContext";

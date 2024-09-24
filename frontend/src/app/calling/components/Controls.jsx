@@ -2,6 +2,7 @@ import { useAuth } from "@/app/context/authContext";
 import { getSender } from "@/app/services/chats";
 import { PhoneIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Button, IconButton } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   BiVideo,
@@ -14,9 +15,9 @@ const { useMeeting } = require("@videosdk.live/react-sdk");
 export function Controls(props) {
   const [mic, setMic] = useState(true);
   const [video, setVideo] = useState(true);
-
   const { auth } = useAuth();
   const { leave, toggleMic, toggleWebcam } = useMeeting();
+  const router = useRouter()
 
   useEffect(() => {
     if(props.callType=='audio') toggleWebcam()
@@ -47,7 +48,7 @@ export function Controls(props) {
           colorScheme="red"
           variant="solid"
           mx={5}
-          onClick={() => leave()}
+          onClick={() => {leave(); router.push('/chats')}}
         >
           End Call
         </Button>

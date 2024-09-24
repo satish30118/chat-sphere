@@ -139,7 +139,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
     });
     socket.on("call recieved", (roomid) => {
       setOpenCallTab(true);
-      setCallingRoomId(roomid)
+      setCallingRoomId(roomid);
     });
     // Clean up the listener when the component unmounts or the selected chat changes
     return () => {
@@ -394,12 +394,7 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
           h="100%"
           bg="#ffffff"
         >
-          <Lottie
-            options={defaultOptions1}
-            height={"70%"}
-            width={"70%"}
-            style={{ marginBottom: 15, marginLeft: 0 }}
-          />
+          <Lottie options={defaultOptions1} />
         </Box>
       )}
     </>

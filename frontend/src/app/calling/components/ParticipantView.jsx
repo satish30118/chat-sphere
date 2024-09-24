@@ -102,7 +102,7 @@ export function ParticipantView(props) {
             playing={true}
             url={videoStream}
             height={"100%"}
-            width={"100%"}
+            width={"500px"}
             onError={(err) => {
               console.error(err, "participant video error");
             }}

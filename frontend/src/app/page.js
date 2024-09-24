@@ -3,38 +3,18 @@ import { Box, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "./context/authContext";
-import axios from "axios";
 
 export default function Home() {
   const { auth } = useAuth();
   const router = useRouter();
-  const userAuthentication = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${auth?.token}`,
-        },
-      };
-      const { data } = await axios.get(`/api/v1/user/authentication`, config);
-      // console.log(data);
-      if (data.status) {
-        router.push("/chats");
-      } else {
-        router.push("/auth");
-      }
-    } catch (error) {
-      console.log(error);
-      router.push("/auth");
-    }
-  };
+
   useEffect(() => {
     if (auth?.token) {
-      userAuthentication();
+      router.push("/chats");
     } else {
       router.push("/auth");
     }
-  }, []);
+  }, [router]);
   return (
     <Box
       display="flex"

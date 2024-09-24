@@ -92,6 +92,13 @@ const SignInForm = () => {
       setAuth(data);
     } catch (error) {
       console.log(error);
+      toast({
+        title: "You have not registered",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
     }
   };
   return (

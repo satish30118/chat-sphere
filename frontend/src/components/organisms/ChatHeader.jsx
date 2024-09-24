@@ -19,6 +19,8 @@ import SideDrawer from "./SideDrawer";
 import { useRouter } from "next/navigation";
 import { getSender } from "@/app/services/chats";
 import { googleLogout } from "@react-oauth/google";
+import ProfileModal from "../molecules/ProfileModal";
+import AIBotModal from "./AIBotModal";
 
 const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -65,6 +67,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               </Button>
             </Tooltip>
           </Menu>
+
           <Menu>
             <MenuButton p={1}>
               <div className="re">
@@ -112,11 +115,13 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               />
             </MenuButton>
             <MenuList p={0}>
-              <MenuItem
-                icon={<Icon iconClass="fa-solid fa-right-from-bracket" />}
-              >
-                Dashboard
-              </MenuItem>
+              <ProfileModal user={auth}>
+                <MenuItem
+                  icon={<Icon iconClass="fa-solid fa-right-from-bracket" />}
+                >
+                  Dashboard
+                </MenuItem>
+              </ProfileModal>
               <MenuDivider />
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>

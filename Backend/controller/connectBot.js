@@ -6,6 +6,7 @@ const client = new OpenAI({
 });
 
 const askGPT = async (req, res) => {
+  const {question} = req.body;
   try {
     const response = await client.chat.completions.create({
       messages: [
@@ -13,7 +14,7 @@ const askGPT = async (req, res) => {
           role: "system",
           content: "You are a helpful assistant who supports Liverpool FC",
         },
-        { role: "user", content: req.body },
+        { role: "user", content: question },
       ],
       model: "gpt-3.5-turbo",
       max_tokens: 300,

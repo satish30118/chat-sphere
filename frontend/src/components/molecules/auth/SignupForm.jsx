@@ -107,6 +107,13 @@ const SignupForm = () => {
       setAuth(data);
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Error try again",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
     }
   };
 

@@ -1,5 +1,5 @@
-export const authToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiJlNDkxN2IyNy1hN2ZjLTQ4NTktODRiYi1kYjAyNTJkYmI0MGEiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sImlhdCI6MTcyNzE5Njc2OCwiZXhwIjoxNzI5Nzg4NzY4fQ.Pnc58xtILoQG24ATf3pwZmPKXXzm3T3CBmqg9nc5A1c";
+export const authToken = process.env.VIDEO_ID;
+  
 
 export const createMeeting = async ({ token }) => {
   try {

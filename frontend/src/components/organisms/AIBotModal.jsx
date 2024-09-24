@@ -57,7 +57,7 @@ const AIBotModal = ({ user, children }) => {
             justifyContent="center"
             borderWidth="1px"
           >
-            AI Bot
+            AI Powered Chat Bot
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody
@@ -66,18 +66,19 @@ const AIBotModal = ({ user, children }) => {
             alignItems="center"
             justifyContent="center"
             py={6}
+            px={3}
           >
             <Box
               display="flex"
               flexDir="column"
               justifyContent="flex-end"
-              p={3}
+              p={1}
               bg="white"
               w="100%"
               h="100%"
               overflowY="hidden"
             >
-              <div className="flex flex-col min-h-20">
+              <div className="flex flex-col min-h-64">
                 <ScrollableChat messages={messages} />
               </div>
 

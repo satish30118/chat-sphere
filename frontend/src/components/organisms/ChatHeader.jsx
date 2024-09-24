@@ -21,6 +21,7 @@ import { getSender } from "@/app/services/chats";
 import { googleLogout } from "@react-oauth/google";
 import ProfileModal from "../molecules/ProfileModal";
 import AIBotModal from "./AIBotModal";
+import ChatbotIcon from "../atoms/ChatBotIcon";
 
 const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,6 +47,28 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
           <b>Chat Sphere</b>
         </Text>
         <div>
+        <Menu>
+            <Tooltip
+              label="AI powered Chatbot"
+              hasArrow
+              placement="bottom-end"
+              px={7}
+            >
+              <AIBotModal>
+              <Button
+                variant="gost"
+               
+                borderRadius="md"
+                marginRight={5}
+                bg="#f2f9f8"
+              >
+               <ChatbotIcon  size={4} h={2} />
+                <Text display={{ base: "none", md: "flex" }} px={3}>
+                  Chat Bot
+                </Text>
+              </Button></AIBotModal>
+            </Tooltip>
+          </Menu>
           <Menu>
             <Tooltip
               label="Search friends to chat"
@@ -67,7 +90,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               </Button>
             </Tooltip>
           </Menu>
-
+         
           <Menu>
             <MenuButton p={1}>
               <div className="re">

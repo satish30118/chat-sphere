@@ -70,7 +70,7 @@ function SideDrawer({
         { userId },
         config
       );
-
+// console.log(data)
       if (!chats?.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
       setFetchChatsAgain(!fetchChatsAgain);

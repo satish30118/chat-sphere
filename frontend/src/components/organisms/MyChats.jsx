@@ -11,14 +11,14 @@ import GroupChatModal from "./GroupChatModal";
 import { findChats, getSender } from "@/app/services/chats";
 
 const MyChats = ({ fetchChatsAgain }) => {
-  const { selectedChat, setSelectedChat, auth } = useAuth();
-  const [chats, setChats] = useState([]);
+  const { selectedChat, setSelectedChat, auth ,chats, setChats} = useAuth();
   const toast = useToast();
 
   const fetchChats = async () => {
     try {
       const data = await findChats();
       setChats(data);
+      console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -94,8 +94,9 @@ const MyChats = ({ fetchChatsAgain }) => {
                     name={
                       !chat?.isGroupChat
                         ? getSender(auth, chat?.users)
-                        : chat?.chatName
+                        : chat?.chatName  
                     }
+                    
                   />
                   <Box>
                     <Text>

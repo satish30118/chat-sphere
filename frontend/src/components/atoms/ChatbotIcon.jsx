@@ -11,8 +11,8 @@ const ChatbotIcon = () => {
       p={4} 
       boxShadow="md"
       _hover={{ bg: "teal.400" }}
-      w="20px" // Adjust width here
-      h="20px" // Adjust height here
+      w="20px" 
+      h="20px" 
     >
       <Icon as={FaCommentDots} w={8} h={8} /> // Adjust icon size here
     </Box>

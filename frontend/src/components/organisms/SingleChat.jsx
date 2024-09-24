@@ -30,7 +30,7 @@ import ThreeDotIcon from "../atoms/ThreeDotIcon";
 import { removeUser } from "@/app/services/group";
 import { useRouter } from "next/navigation";
 import { authToken, createMeeting } from "@/app/services/callapi";
-const ENDPOINT = "http://localhost:8000";
+const ENDPOINT = process.env.NEXT_PUBLIC_API_URL;
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {

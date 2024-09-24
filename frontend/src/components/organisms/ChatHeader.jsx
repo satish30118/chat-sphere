@@ -40,10 +40,11 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         alignItems="center"
         bg="#f2f9f8"
         w="100%"
-        p="10px 15px"
+        py="10px"
+        px={{base:"10px", md:"15px"}}
         borderWidth="2px"
       >
-        <Text px={3}  fontSize={{ base: "17px", md: "25px", lg:"30px" }}>
+        <Text px={3}  fontSize={{ base: "14px", md: "25px", lg:"30px" }}>
           <b>Chat Sphere</b>
         </Text>
         <div>
@@ -57,8 +58,8 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               <AIBotModal>
               <Button
                 variant="gost"
-              size={{base:8, md:12}}
-                marginRight={2}
+              size={{base:4, md:12}}
+                marginRight={{base:1, md:3}
                 bg="#f2f9f8"
               >
                <ChatbotIcon  />
@@ -73,7 +74,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
               label="Search friends to chat"
               hasArrow
               placement="bottom-end"
-              px={7}
+              px={{base:1, md:7}
             >
               <Button
                 variant="ghost"
@@ -125,6 +126,7 @@ const ChatHeader = ({ fetchChatsAgain, setFetchChatsAgain }) => {
             <MenuButton
               borderWidth="1px"
               borderRadius="md"
+              px={1}
               as={Button}
               bg="white"
               rightIcon={<ChevronDownIcon />}

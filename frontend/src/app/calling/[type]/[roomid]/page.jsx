@@ -10,10 +10,11 @@ function Room() {
   const {auth} = useAuth()
   const username = auth?.name;
   const { type, roomid } = useParams();
-  const [meetingId, setMeetingId] = useState(roomid);
+  const [meetingId, setMeetingId] = useState(null);
   const onMeetingLeave = () => {
     setMeetingId(null);
   };
+  useEffect(()=>{setMeetingId(roomid)},[])
 
   return (
     authToken &&

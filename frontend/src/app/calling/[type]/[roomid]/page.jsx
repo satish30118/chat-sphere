@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MeetingProvider } from "@videosdk.live/react-sdk";
 import { MeetingView } from "../../components/MeetingView";
 import { authToken, createMeeting } from "../../../services/callapi";

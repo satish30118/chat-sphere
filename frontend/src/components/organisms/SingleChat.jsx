@@ -203,11 +203,33 @@ const SingleChat = ({ fetchChatsAgain, setFetchChatsAgain }) => {
   const router = useRouter();
   const handleVideoCall = async () => {
     const roomid = await createMeeting({ token: authToken });
+    if(!roomid){
+      
+    toast({
+          title: "Error Occured!",
+          description: "API key expired",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+    return;}
     router.push(`calling/video/${roomid}`);
     socket.emit("calling", { roomid, selectedChat, callerId: auth?._id });
   };
   const handleAudioCall = async () => {
     const roomid = await createMeeting({ token: authToken });
+    if(!roomid){
+      
+    toast({
+          title: "Error Occured!",
+          description: "API key expired",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+    return;}
     router.push(`calling/audio/${roomid}`);
     socket.emit("calling", { roomid, selectedChat, callerId: auth?._id });
   };

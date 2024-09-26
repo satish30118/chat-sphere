@@ -1,6 +1,6 @@
 ---
 ## This repository has been developed as part of my ongoing journey in software development
-###  It is also submitted in association with my internship application at I'm Beside You.
+###  It is also submitted in association with my internship application.
 
 - Name : Satish Kumar Maurya
 - Email : satish_km@ch.iitr.ac.in

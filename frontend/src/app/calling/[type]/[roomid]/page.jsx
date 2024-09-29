@@ -24,7 +24,7 @@ function Room() {
           meetingId,
           micEnabled: true,
           webcamEnabled: true,
-          name:"",
+          name : {username}
         }}
         token={authToken}
       >

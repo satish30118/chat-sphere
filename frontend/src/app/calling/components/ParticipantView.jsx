@@ -73,8 +73,7 @@ export function ParticipantView(props) {
               mr={2}
               size="lg"
               cursor="pointer"
-              name={auth?.name}
-              pic={auth?.pic}
+              name={props.participantId}
             />
           </Box>
         )}
@@ -95,10 +94,10 @@ export function ParticipantView(props) {
             mr={2}
             size="sm"
             cursor="pointer"
-            name={auth?.name}
+            name={props.participantId}
             pic={auth?.pic}
           />
-          <b>{auth?.name}</b>
+          <b>{props.participantId}</b>
         </Box>
         <Box
           display="flex"

@@ -1,5 +1,4 @@
----
---
+
 # Real Time Chat Application (Web Application)
 
 ## Introduction

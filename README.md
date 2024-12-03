@@ -1,13 +1,5 @@
 ---
-## This repository has been developed as part of my ongoing journey in software development
-###  It is also submitted in association with my internship application.
-
-- Name : Satish Kumar Maurya
-- Email : satish_km@ch.iitr.ac.in
-- University : IIT Roorkee
-- Department : Chemical Engineering 
-
----
+--
 # Real Time Chat Application (Web Application)
 
 ## Introduction
